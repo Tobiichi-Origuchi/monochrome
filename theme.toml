@@ -2,23 +2,10 @@ name = "Monochrome"
 description = "A minimal, configurable, multilingual Zola theme for personal sites and blogs."
 tags = ["blog", "minimal", "responsive", "multilingual", "dark-mode"]
 license = "MIT"
-homepage = "https://monochrome.origuchi.uk/"
+homepage = "https://github.com/Tobiichi-Origuchi/monochrome"
 min_version = "0.23.3"
 demo = "https://monochrome.origuchi.uk/"
 
 [author]
 name = "Tobiichi-Origuchi"
 homepage = "https://github.com/Tobiichi-Origuchi"
-
-[extra]
-i18n_path = "themes/monochrome/i18n/"
-enable_code_copy = false
-footer_copyright = ""
-footer_show_powered = true
-footer_source_url = ""
-footer_socials = []
-footer_show_timestamp = false
-
-[extra.nav]
-home_url = "@/_index.md"
-links = [{ url = "@/_index.md", name = "Home" }]
