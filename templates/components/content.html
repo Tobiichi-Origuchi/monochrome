@@ -25,9 +25,9 @@
 <a class="button button--{{ variant }}" href="{{ href }}">{{ label }}</a>
 {%- endcomponent content.button %}
 
-{% component content.figure(src: string, alt: string, caption: string = "") -%}
+{% component content.figure(src: string, alt: string, caption: string = "", width: integer = 0, height: integer = 0) -%}
 <figure class="media-figure">
-  <img src="{{ src }}" alt="{{ alt }}" loading="lazy" decoding="async">
+  <img src="{{ src }}" alt="{{ alt }}"{% if width and height %} width="{{ width }}" height="{{ height }}"{% endif %} loading="lazy" decoding="async">
   {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
 </figure>
 {%- endcomponent content.figure %}
@@ -59,6 +59,10 @@
 {% component content.mark(text: string) -%}<mark>{{ text }}</mark>{%- endcomponent content.mark %}
 
 {% component content.annotation(label: string) -%}<span class="annotation" role="note">{{ label }}</span>{%- endcomponent content.annotation %}
+
+{% component content.task(label: string, checked: bool = false) -%}
+<label class="task-item"><input type="checkbox" disabled{% if checked %} checked{% endif %}> {{ label }}</label>
+{%- endcomponent content.task %}
 
 {% component content.progress(label: string, value: integer, max: integer = 100) -%}
 <div class="progress-example">

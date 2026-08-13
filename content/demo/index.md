@@ -42,8 +42,8 @@ This is an [internal link](@/about.md), an [external link](https://www.getzola.o
    2. Another nested item
 3. Final ordered item
 
-- [x] Completed task
-- [ ] Open task
+- {{<content.task label="Completed task" checked={true} />}}
+- {{<content.task label="Open task" />}}
 
 Term one
 : A definition for the first term.
@@ -116,7 +116,7 @@ This region uses the native `details` and `summary` elements. It works without J
 
 ![A monochrome geometric demonstration image](demo-image.svg "Demo image")
 
-{{<content.figure src="demo-image.svg" alt="A monochrome geometric demonstration image" caption="A reusable figure component with a caption." />}}
+{{<content.figure src="demo-image.svg" alt="A monochrome geometric demonstration image" caption="A reusable figure component with a caption." width={960} height={540} />}}
 
 {{<content.audio src="demo-tone.wav" title="Audio sample" mime="audio/wav" />}}
 

@@ -42,8 +42,8 @@ description = "主题常用内容元素的参考页面。"
    2. 另一项嵌套项目
 3. 最后一项有序列表
 
-- [x] 已完成任务
-- [ ] 未完成任务
+- {{<content.task label="已完成任务" checked={true} />}}
+- {{<content.task label="未完成任务" />}}
 
 术语一
 : 第一个术语的定义。
@@ -116,7 +116,7 @@ zola check
 
 ![黑白几何图形演示图片](demo-image.svg "演示图片")
 
-{{<content.figure src="demo-image.svg" alt="黑白几何图形演示图片" caption="带有说明文字的可复用图片 Component。" />}}
+{{<content.figure src="demo-image.svg" alt="黑白几何图形演示图片" caption="带有说明文字的可复用图片 Component。" width={960} height={540} />}}
 
 {{<content.audio src="demo-tone.wav" title="音频示例" mime="audio/wav" />}}
 
