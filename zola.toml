@@ -1,6 +1,6 @@
-# The public URL where the site will be hosted.
-# Replace this development address before deploying the site.
-base_url = "http://127.0.0.1:1111"
+# The public URL of the Monochrome theme website.
+# Theme users should replace it with the address of their own site.
+base_url = "https://monochrome.origuchi.uk/"
 
 # The default site title and description. They are used in page titles,
 # metadata, feeds, and the sidebar brand.

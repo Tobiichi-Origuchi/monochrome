@@ -2,9 +2,9 @@ name = "Monochrome"
 description = "A minimal, configurable, multilingual Zola theme for personal sites and blogs."
 tags = ["blog", "minimal", "responsive", "multilingual", "dark-mode"]
 license = "MIT"
-homepage = "https://github.com/Tobiichi-Origuchi/monochrome"
+homepage = "https://monochrome.origuchi.uk/"
 min_version = "0.23.3"
-demo = ""
+demo = "https://monochrome.origuchi.uk/"
 
 [author]
 name = "Tobiichi-Origuchi"

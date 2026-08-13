@@ -117,7 +117,7 @@
   {% if copyright %}<p>{{ copyright | replace(from="$YEAR", to=current_year) }}</p>{% endif %}
   {% if show_powered %}
     {% set zola_link = '<a href="https://www.getzola.org/">Zola</a>' %}
-    {% if source_url %}{% set monochrome_link = '<a href="' ~ source_url ~ '">Monochrome</a>' %}{% else %}{% set monochrome_link = "Monochrome" %}{% endif %}
+    {% set monochrome_link = '<a href="https://monochrome.origuchi.uk/">Monochrome</a>' %}
     <p>{{ messages.powered_by | replace(from="$ZOLA", to=zola_link) | replace(from="$MONOCHROME", to=monochrome_link) | safe }}</p>
   {% endif %}
   {% if source_url %}<p><a href="{{ source_url }}">{{ messages.website_source }}</a></p>{% endif %}
