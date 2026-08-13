@@ -16,7 +16,11 @@ description = "主题常用内容元素的参考页面。"
 这是一个[站内链接](@/about.md)、一个[外部链接](https://www.getzola.org/)、一个邮件链接 <hello@example.com>，以及指向[音频示例](demo-tone.wav)的直接下载链接。
 
 {{<content.button label="主要操作" href="#表格" />}}
-{{<content.button label="次要操作" href="#媒体" variant="secondary" />}}
+{{<content.button label="次要操作" href="#媒体" variant="secondary" icon="simpleicons" />}}
+
+## Simple Icons
+
+这里有 Simple Icons {{<icon.simple slug="simpleicons" />}} 与 GitHub {{<icon.simple slug="github" />}}。在[这里](https://simpleicons.org/)搜索所有可用的图标。
 
 ## 标题
 

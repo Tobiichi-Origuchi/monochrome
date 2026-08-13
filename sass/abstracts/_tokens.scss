@@ -12,6 +12,7 @@
   --line: #d6d6d6;
   --strong-line: #111;
   --selection: #d6d6d6;
+  --remote-icon-filter: none;
   --alert-note: #0969da;
   --alert-tip: #1a7f37;
   --alert-important: #8250df;
@@ -28,6 +29,7 @@
     --line: #3d3d3d;
     --strong-line: #f5f5f5;
     --selection: #555;
+    --remote-icon-filter: invert(1);
     --alert-note: #58a6ff;
     --alert-tip: #3fb950;
     --alert-important: #a371f7;

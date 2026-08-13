@@ -16,7 +16,11 @@ Use {{<content.mark text="highlighted text" />}}, {{<content.badge label="Badge"
 This is an [internal link](@/about.md), an [external link](https://www.getzola.org/), an email link <hello@example.com>, and a direct download link to the [audio sample](demo-tone.wav).
 
 {{<content.button label="Primary action" href="#tables" />}}
-{{<content.button label="Secondary action" href="#media" variant="secondary" />}}
+{{<content.button label="Secondary action" href="#media" variant="secondary" icon="simpleicons" />}}
+
+## Simple Icons
+
+These are the Simple Icons {{<icon.simple slug="simpleicons" />}} and GitHub {{<icon.simple slug="github" />}} marks. Search for all available icons [here](https://simpleicons.org/).
 
 ## Headings
 

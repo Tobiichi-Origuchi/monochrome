@@ -14,13 +14,13 @@
     {%- set active = true -%}
   {%- endif -%}
 {%- endif -%}
-<a class="vertical-tab{% if nested %} vertical-tab--nested{% endif %}{% if active %} is-active{% endif %}" href="{{ href }}"{% if active %} aria-current="page"{% endif %}{% if is_external %} rel="external"{% endif %}>{{ item.name }}</a>
+<a class="vertical-tab{% if nested %} vertical-tab--nested{% endif %}{% if active %} is-active{% endif %}" href="{{ href }}"{% if active %} aria-current="page"{% endif %}{% if is_external %} rel="external"{% endif %}>{% if item.icon %}{{<icon.simple slug={item.icon} />}} {% endif %}{{ item.name }}</a>
 {%- endcomponent site.navigation_link %}
 
 {% component site.navigation_group(group: map, active_lang: string, current_url: string = "") -%}
 <li>
   <details class="vertical-group"{% if not group.collapsed %} open{% else %}{% for item in group.category %}{% set is_direct = item.url is matching(pat="^(https?://|mailto:|tel:|#|//)") %}{% if not is_direct %}{% set href = get_url(path=item.url, lang=active_lang, trailing_slash=item.trailing_slash or false) %}{% set normalized_current_url = current_url | trim_end(pat="/") %}{% set normalized_href = href | trim_end(pat="/") %}{% if normalized_current_url == normalized_href or (item.match_children and current_url is starting_with(pat=href)) %} open{% break %}{% endif %}{% endif %}{% endfor %}{% endif %}>
-    <summary class="vertical-tab vertical-tab--group">{{ group.name }}</summary>
+    <summary class="vertical-tab vertical-tab--group">{% if group.icon %}{{<icon.simple slug={group.icon} />}} {% endif %}{{ group.name }}</summary>
     <ul class="vertical-subtabs">
       {%- for item in group.category %}
         <li>{{<site.navigation_link item={item} active_lang={active_lang} current_url={current_url} nested={true} />}}</li>
@@ -122,7 +122,7 @@
   {% endif %}
   {% if source_url %}<p><a href="{{ source_url }}">{{ messages.website_source }}</a></p>{% endif %}
   {% if socials %}
-    <p>{{ messages.social }}:{% for account in socials %} <a href="{{ account.url }}" rel="me">{{ account.platform }} {{ account.handle }}</a>{% if not loop.last %}<span aria-hidden="true"> / </span>{% endif %}{% endfor %}</p>
+    <p>{{ messages.social }}:{% for account in socials %} <a href="{{ account.url }}" rel="me">{% if account.icon %}{{<icon.simple slug={account.icon} />}} {% endif %}{{ account.platform }} {{ account.handle }}</a>{% if not loop.last %}<span aria-hidden="true"> / </span>{% endif %}{% endfor %}</p>
   {% endif %}
   {% if show_timestamp %}
     <p class="site-footer__timestamp"><time datetime="{{ build_time | date(format="%Y-%m-%dT%H:%M:%S%:z", timezone=timezone) }}">{{ build_time | date(format="%Y-%m-%d %H:%M:%S", timezone=timezone) }} {{ timezone }}</time></p>

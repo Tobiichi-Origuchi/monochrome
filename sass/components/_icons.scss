@@ -1,0 +1,21 @@
+.simple-icon {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 1em;
+  line-height: 1;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+
+.simple-icon__image {
+  display: block;
+  fill: currentcolor;
+  height: 100%;
+  width: 100%;
+}
+
+.simple-icon--remote .simple-icon__image {
+  filter: var(--remote-icon-filter);
+}

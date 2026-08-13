@@ -1,0 +1,32 @@
+{% component icon.simple(slug: string, label: string = "", extra_class: string = "", mode: string = "", provider: string = "", version: string = "") -%}
+{%- set site_config = load_data(path="zola.toml", required=false) -%}
+{%- if not site_config -%}{%- set site_config = load_data(path="config.toml", required=false) -%}{%- endif -%}
+{%- set site_extra = site_config.extra or {} -%}
+{%- set options = site_extra.simple_icons or {} -%}
+{%- set mode = mode or options.mode or "inline" -%}
+{%- set provider = provider or options.provider or "jsdelivr" -%}
+{%- set version = version or options.version or "latest" -%}
+{%- if mode != "inline" and mode != "remote" -%}
+  {{- throw(message="Monochrome: extra.simple_icons.mode must be `inline` or `remote`.") -}}
+{%- endif -%}
+{%- if provider != "jsdelivr" and provider != "unpkg" -%}
+  {{- throw(message="Monochrome: extra.simple_icons.provider must be `jsdelivr` or `unpkg`.") -}}
+{%- endif -%}
+{%- if not slug is matching(pat="^[a-z0-9_]+$") -%}
+  {{- throw(message="Monochrome: `" ~ slug ~ "` is not a valid Simple Icons slug.") -}}
+{%- endif -%}
+{%- set package_path = "simple-icons@" ~ version ~ "/icons/" ~ slug ~ ".svg" -%}
+{%- if provider == "unpkg" -%}
+  {%- set icon_url = "https://unpkg.com/" ~ package_path -%}
+{%- else -%}
+  {%- set icon_url = "https://cdn.jsdelivr.net/npm/" ~ package_path -%}
+{%- endif -%}
+{%- set class_name = "simple-icon simple-icon--" ~ mode -%}
+{%- if extra_class -%}{%- set class_name = class_name ~ " " ~ extra_class -%}{%- endif -%}
+{%- if mode == "inline" -%}
+  {%- set svg = load_data(url=icon_url, format="plain") -%}
+<span class="{{ class_name }}"{% if label %} role="img" aria-label="{{ label }}"{% else %} aria-hidden="true"{% endif %}>{{ svg | replace(from="<svg ", to='<svg class="simple-icon__image" aria-hidden="true" focusable="false" ') | safe }}</span>
+{%- else -%}
+<span class="{{ class_name }}"><img class="simple-icon__image" src="{{ icon_url }}" alt="{{ label }}" width="24" height="24"{% if not label %} aria-hidden="true"{% endif %}></span>
+{%- endif -%}
+{%- endcomponent icon.simple %}

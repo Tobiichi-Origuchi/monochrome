@@ -21,8 +21,8 @@
 </details>
 {%- endcomponent content.disclosure %}
 
-{% component content.button(label: string, href: string, variant: string = "primary") -%}
-<a class="button button--{{ variant }}" href="{{ href }}">{{ label }}</a>
+{% component content.button(label: string, href: string, variant: string = "primary", icon: string = "") -%}
+<a class="button button--{{ variant }}" href="{{ href }}">{% if icon %}{{<icon.simple slug={icon} />}} {% endif %}{{ label }}</a>
 {%- endcomponent content.button %}
 
 {% component content.figure(src: string, alt: string, caption: string = "", width: integer = 0, height: integer = 0) -%}

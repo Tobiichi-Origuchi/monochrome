@@ -50,10 +50,6 @@ style = "class"
 light_theme = "github-light"
 dark_theme = "github-dark"
 
-[link_checker]
-# URLs with these prefixes are trusted and excluded from external link checks.
-skip_prefixes = ["https://www.getzola.org/"]
-
 [languages.zh-CN]
 # Language-specific site metadata.
 title = "黑白"
@@ -82,12 +78,24 @@ footer_show_powered = true
 footer_source_url = "https://github.com/Tobiichi-Origuchi/monochrome"
 # Add, remove, or reorder accounts as needed.
 footer_socials = [
-  { platform = "GitHub", handle = "@Tobiichi-Origuchi", url = "https://github.com/Tobiichi-Origuchi" },
+  { platform = "GitHub", handle = "@Tobiichi-Origuchi", url = "https://github.com/Tobiichi-Origuchi", icon = "github" },
 ]
 # Show the time at which Zola built the site.
 footer_show_timestamp = true
 # Timestamp and `$YEAR` timezone. UTC is used when this option is omitted.
-# timezone = "Asia/Shanghai"
+timezone = "Asia/Shanghai"
+
+[extra.simple_icons]
+# Simple Icons are loaded individually by slug. `inline` fetches each used SVG
+# while Zola builds and embeds it in the generated HTML. `remote` performs no
+# build-time request and leaves each icon URL for the visitor's browser to
+# request from the CDN.
+mode = "inline"
+# jsDelivr or unpkg.
+provider = "jsdelivr"
+# Omit `version` to use `latest`. Pinning a major or exact release makes builds
+# reproducible and prevents a removed icon from unexpectedly returning 404.
+version = "v16"
 
 [extra.nav]
 # Destination of the sidebar brand, the 404 return link, and language fallback
@@ -100,10 +108,12 @@ home_url = "@/_index.md"
 # - `url` accepts Zola internal links (`@/...`), generated paths such as
 #   `tags`, and absolute external URLs.
 # - `name` is the visible label.
+# - `icon` optionally names any Simple Icons slug.
 # - `match_children = true` keeps a section active on its descendant pages.
 # - `trailing_slash = true` is useful for taxonomies and other directory URLs.
 #
-# Category entries use `name` and `category` instead of `url`.
+# Category entries use `name` and `category` instead of `url`; they can also
+# use an optional `icon`.
 # Set `collapsed = true` to close a category initially. Omit it or set it to
 # false to render the category expanded. Categories use native details/summary
 # and therefore work without JavaScript.
