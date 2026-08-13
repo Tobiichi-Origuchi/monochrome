@@ -1,41 +1,41 @@
-{% component content.post_meta(post: map, messages: map) %}
+{% component content.post_meta(post: map, messages: map) -%}
 <p class="post-meta">
-  {% if post.date %}
-    {% set date_markup = '<time datetime="' ~ (post.date | date(format="%Y-%m-%d")) ~ '">' ~ (post.date | date(format=messages.date_format)) ~ '</time>' %}
+  {%- if post.date -%}
+    {%- set date_markup = '<time datetime="' ~ (post.date | date(format="%Y-%m-%d")) ~ '">' ~ (post.date | date(format=messages.date_format)) ~ '</time>' -%}
     <span>{{ messages.published_on | replace(from="$DATE", to=date_markup) | safe }}</span>
-  {% endif %}
-  {% if post.date and post.reading_time %}<span aria-hidden="true">/</span>{% endif %}
+  {%- endif -%}
+  {% if post.date and post.reading_time %}<span aria-hidden="true">/</span>{% endif -%}
   {% if post.reading_time %}<span>{{<i18n.number key="reading_time" messages={messages} active_lang={post.lang} number={post.reading_time} default="$NUMBER min read" />}}</span>{% endif %}
 </p>
-{% endcomponent content.post_meta %}
+{%- endcomponent content.post_meta %}
 
-{% component content.post_tags(post: map, messages: map) %}
-{% if post.taxonomies.tags %}
+{% component content.post_tags(post: map, messages: map) -%}
+{%- if post.taxonomies.tags %}
   <ul class="post-tags" aria-label="{{ messages.tags }}">
-    {% for tag in post.taxonomies.tags %}
+    {%- for tag in post.taxonomies.tags %}
       <li><a href="{{ get_taxonomy_url(kind="tags", name=tag, lang=post.lang) }}">#{{ tag }}</a></li>
-    {% endfor %}
+    {%- endfor %}
   </ul>
-{% endif %}
-{% endcomponent content.post_tags %}
+{%- endif %}
+{%- endcomponent content.post_tags %}
 
-{% component content.post_item(post: map, messages: map) %}
+{% component content.post_item(post: map, messages: map) -%}
 <article class="post-item">
   {{<content.post_meta post={post} messages={messages} />}}
   <h2><a href="{{ post.permalink }}">{{ post.title or messages.untitled }}</a></h2>
   {% if post.description %}<p class="post-summary">{{ post.description }}</p>{% endif %}
   {{<content.post_tags post={post} messages={messages} />}}
 </article>
-{% endcomponent content.post_item %}
+{%- endcomponent content.post_item %}
 
-{% component content.post_list(posts: array, messages: map) %}
-{% if posts %}
+{% component content.post_list(posts: array, messages: map) -%}
+{%- if posts %}
   <ol class="post-list">
-    {% for post in posts %}
+    {%- for post in posts %}
       <li>{{<content.post_item post={post} messages={messages} />}}</li>
-    {% endfor %}
+    {%- endfor %}
   </ol>
 {% else %}
   {{<ui.empty_state message={messages.no_posts} />}}
-{% endif %}
-{% endcomponent content.post_list %}
+{% endif -%}
+{%- endcomponent content.post_list %}

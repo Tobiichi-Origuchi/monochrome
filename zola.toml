@@ -14,6 +14,9 @@ default_language = "en"
 # Compile sass/site.scss and its modules into public/site.css.
 compile_sass = true
 
+# Minify generated HTML for smaller production responses.
+minify_html = true
+
 # Monochrome does not include a client-side search interface.
 build_search_index = false
 

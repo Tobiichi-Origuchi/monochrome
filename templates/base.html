@@ -1,5 +1,5 @@
-{% set active_lang = lang or config.default_language %}
-{% set messages = load_data(path=config.extra.i18n_path ~ active_lang ~ ".toml") %}
+{%- set active_lang = lang or config.default_language -%}
+{%- set messages = load_data(path=config.extra.i18n_path ~ active_lang ~ ".toml") -%}
 <!doctype html>
 <html lang="{{ active_lang }}" dir="{{ messages.direction }}" data-copy-label="{{ messages.copy_code }}" data-copied-label="{{ messages.code_copied }}" data-copy-failed-label="{{ messages.copy_failed }}">
   <head>

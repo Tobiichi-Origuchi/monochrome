@@ -29,4 +29,4 @@
 {% set translated = messages[prefix ~ key] or messages[key] or default -%}
 {% set number_text = "" ~ number -%}
 {{- translated | replace(from="$NUMBER", to=number_text) -}}
-{% endcomponent i18n.number %}
+{%- endcomponent i18n.number %}
