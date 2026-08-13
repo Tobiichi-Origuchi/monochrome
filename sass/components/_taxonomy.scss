@@ -1,0 +1,35 @@
+.term-list {
+  border-block-start: 1px solid var(--line);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    align-items: baseline;
+    border-block-end: 1px solid var(--line);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding-block: 1rem;
+  }
+
+  a {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  span {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+}
+
+.empty-state {
+  border-block: 1px solid var(--line);
+  color: var(--muted);
+  padding-block: 1rem;
+}
+
+.back-link {
+  margin: 0;
+}

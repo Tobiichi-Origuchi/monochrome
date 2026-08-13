@@ -1,0 +1,23 @@
+.site-footer {
+  border-block-start: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-inline: var(--frame-gutter);
+  padding-block: 1.25rem 2rem;
+
+  p {
+    margin: 0;
+  }
+
+  p + p {
+    margin-block-start: 0.25rem;
+  }
+
+  a {
+    color: var(--text);
+  }
+}
+
+.site-footer__timestamp {
+  font-size: 0.88em;
+}

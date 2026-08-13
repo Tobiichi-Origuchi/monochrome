@@ -1,0 +1,22 @@
+@mixin themed-scrollbar {
+  @supports selector(::-webkit-scrollbar-thumb) {
+    &::-webkit-scrollbar {
+      height: var(--scrollbar-width);
+      width: var(--scrollbar-width);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--muted);
+      min-height: 2rem;
+    }
+  }
+
+  @supports not selector(::-webkit-scrollbar-thumb) {
+    scrollbar-color: var(--muted) transparent;
+    scrollbar-width: thin;
+  }
+}

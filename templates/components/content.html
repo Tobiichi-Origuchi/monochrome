@@ -1,0 +1,68 @@
+{% component content.code_block(language: string = "text") %}
+{% set code = body | trim_start(pat="\n") | trim_end(pat="\n") %}
+{% set fenced_code = "```" ~ language ~ "\n" ~ code ~ "\n```" %}
+<figure class="code-block">
+  <figcaption>{{ language }}</figcaption>
+  {{ fenced_code | markdown | safe }}
+</figure>
+{% endcomponent content.code_block %}
+
+{% component content.notice(kind: string = "note", title: string = "Note") %}
+<aside class="notice notice--{{ kind }}">
+  <p class="notice__title">{{ title }}</p>
+  <div class="notice__body">{{ body | markdown | safe }}</div>
+</aside>
+{% endcomponent content.notice %}
+
+{% component content.disclosure(summary: string) %}
+<details class="disclosure">
+  <summary>{{ summary }}</summary>
+  <div class="disclosure__body">{{ body | markdown | safe }}</div>
+</details>
+{% endcomponent content.disclosure %}
+
+{% component content.button(label: string, href: string, variant: string = "primary") %}
+<a class="button button--{{ variant }}" href="{{ href }}">{{ label }}</a>
+{% endcomponent content.button %}
+
+{% component content.figure(src: string, alt: string, caption: string = "") %}
+<figure class="media-figure">
+  <img src="{{ src }}" alt="{{ alt }}" loading="lazy" decoding="async">
+  {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
+</figure>
+{% endcomponent content.figure %}
+
+{% component content.audio(src: string, title: string, mime: string = "audio/mpeg") %}
+<figure class="media-player">
+  <figcaption>{{ title }}</figcaption>
+  <audio controls preload="metadata">
+    <source src="{{ src }}" type="{{ mime }}">
+    <a href="{{ src }}">{{ title }}</a>
+  </audio>
+</figure>
+{% endcomponent content.audio %}
+
+{% component content.video(src: string, title: string, poster: string = "", mime: string = "video/mp4") %}
+<figure class="media-player">
+  <figcaption>{{ title }}</figcaption>
+  <video controls preload="metadata"{% if poster %} poster="{{ poster }}"{% endif %}>
+    <source src="{{ src }}" type="{{ mime }}">
+    <a href="{{ src }}">{{ title }}</a>
+  </video>
+</figure>
+{% endcomponent content.video %}
+
+{% component content.badge(label: string) %}<span class="badge">{{ label }}</span>{% endcomponent content.badge %}
+
+{% component content.kbd(keys: string) %}<kbd>{{ keys }}</kbd>{% endcomponent content.kbd %}
+
+{% component content.mark(text: string) %}<mark>{{ text }}</mark>{% endcomponent content.mark %}
+
+{% component content.annotation(label: string) %}<span class="annotation" role="note">{{ label }}</span>{% endcomponent content.annotation %}
+
+{% component content.progress(label: string, value: integer, max: integer = 100) %}
+<div class="progress-example">
+  <label>{{ label }} <span>{{ value }}/{{ max }}</span></label>
+  <progress value="{{ value }}" max="{{ max }}">{{ value }}/{{ max }}</progress>
+</div>
+{% endcomponent content.progress %}

@@ -1,0 +1,153 @@
+.prose :not(pre) > code,
+.prose kbd,
+.prose samp {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.86em;
+  padding: 0.08em 0.3em;
+}
+
+.prose kbd {
+  border-block-end: 0.18rem solid var(--muted);
+  font-size: 0.78em;
+  white-space: nowrap;
+}
+
+.prose pre,
+.code-block {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin-block: 1.2rem;
+  max-width: 100%;
+  width: 100%;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: 1rem;
+
+  > code {
+    font: inherit;
+  }
+
+  > code[data-lang] {
+    display: block;
+  }
+
+  > code[data-lang]::before {
+    border-block-end: 1px solid var(--line);
+    color: var(--muted);
+    content: attr(data-lang);
+    display: block;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: -1rem -1rem 1rem;
+    padding: 0.45rem 0.7rem;
+    text-transform: uppercase;
+    user-select: none;
+  }
+}
+
+.code-block {
+  margin-inline: 0;
+  position: relative;
+
+  figcaption {
+    border-block-end: 1px solid var(--line);
+    color: var(--muted);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 0.7rem;
+    text-transform: uppercase;
+  }
+
+  pre {
+    border: 0;
+    margin: 0;
+    padding: 1rem;
+  }
+
+  pre > code[data-lang]::before {
+    content: none;
+  }
+}
+
+.giallo-l {
+  display: inline-block;
+  min-height: 1lh;
+  width: 100%;
+}
+
+.giallo-ln {
+  display: inline-block;
+  margin-inline-end: 0.4em;
+  min-width: 3ch;
+  opacity: 0.8;
+  padding: 0.4em;
+  text-align: end;
+  user-select: none;
+}
+
+.prose pre mark {
+  background: var(--selection);
+  color: inherit;
+  display: block;
+}
+
+.code-copy-shell {
+  margin-block: 1.2rem;
+  position: relative;
+  width: 100%;
+
+  > pre {
+    margin-block: 0;
+  }
+}
+
+.code-copy-host > figcaption,
+.code-copy-host > pre > code[data-lang]::before {
+  padding-inline-end: 5.5rem;
+}
+
+.code-copy-host--plain > pre {
+  padding-block-start: 2.8rem;
+}
+
+.prose .code-copy-button {
+  background: var(--background);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  inset-block-start: 0.32rem;
+  inset-inline-end: 0.45rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  padding: 0.16rem 0.45rem;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 1;
+
+  &:hover {
+    background: var(--surface);
+    color: var(--text);
+  }
+}
+
+.copy-source {
+  block-size: 1px;
+  inline-size: 1px;
+  inset: 0 auto auto 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+}

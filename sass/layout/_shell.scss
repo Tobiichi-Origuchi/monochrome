@@ -1,0 +1,117 @@
+@use "../abstracts/mixins";
+
+.site-frame {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.sidebar {
+  background: var(--background);
+  border-inline-end: 1px solid var(--line);
+  height: 100%;
+  inline-size: var(--sidebar-width);
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block: 3rem 2rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 0.15rem solid var(--strong-line);
+    outline-offset: -0.15rem;
+  }
+}
+
+.sidebar-toggle:checked ~ .sidebar {
+  inline-size: 0;
+  visibility: hidden;
+}
+
+.page-column {
+  @include mixins.themed-scrollbar;
+
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+  height: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  width: 100%;
+}
+
+.sidebar-dismiss {
+  display: none;
+}
+
+main {
+  flex: 1 0 auto;
+  margin-inline: auto;
+  max-width: var(--content-frame-max);
+  padding: clamp(2.5rem, 7vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+  width: 100%;
+}
+
+@media (max-width: 64rem) {
+  .sidebar {
+    inline-size: 0;
+    visibility: hidden;
+  }
+
+  .sidebar-toggle:checked ~ .sidebar {
+    inline-size: var(--sidebar-width);
+    visibility: visible;
+  }
+}
+
+@media (max-width: 42rem) {
+  .site-frame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    block-size: 100vh;
+    block-size: 100svh;
+    inline-size: min(var(--sidebar-width), calc(100vw - 3rem));
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    padding-block-start: calc(var(--utility-height) + 1.5rem);
+    position: fixed;
+    transform: translateX(-100%);
+    visibility: hidden;
+    z-index: 5;
+  }
+
+  .sidebar-toggle:checked ~ .sidebar {
+    inline-size: min(var(--sidebar-width), calc(100vw - 3rem));
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .page-column {
+    grid-column: 1;
+  }
+
+  .sidebar-toggle:checked ~ .sidebar-dismiss {
+    background: rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    display: block;
+    inset: 0;
+    position: fixed;
+    z-index: 4;
+  }
+
+  main {
+    padding: 2.25rem 1rem;
+  }
+}

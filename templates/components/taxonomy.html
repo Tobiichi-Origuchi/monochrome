@@ -1,0 +1,14 @@
+{% component content.term_list(terms: array, messages: map, active_lang: string) %}
+{% if terms %}
+  <ul class="term-list">
+    {% for term in terms %}
+      <li>
+        <a href="{{ term.permalink }}">{{ term.name }}</a>
+        <span>{{<i18n.number key="post_count" messages={messages} active_lang={active_lang} number={term.page_count} default="$NUMBER posts" />}}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  {{<ui.empty_state message={messages.no_tags} />}}
+{% endif %}
+{% endcomponent content.term_list %}

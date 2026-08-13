@@ -1,0 +1,136 @@
+{% component site.navigation_link(item: map, active_lang: string, current_url: string = "", nested: bool = false) %}
+{% set is_external = item.url is matching(pat="^https?://") %}
+{% set is_direct = is_external or item.url is matching(pat="^(mailto:|tel:|#|//)") %}
+{% if is_direct %}
+  {% set href = item.url %}
+{% else %}
+  {% set href = get_url(path=item.url, lang=active_lang, trailing_slash=item.trailing_slash or false) %}
+{% endif %}
+{% set active = false %}
+{% if not is_direct %}
+  {% set normalized_current_url = current_url | trim_end(pat="/") %}
+  {% set normalized_href = href | trim_end(pat="/") %}
+  {% if normalized_current_url == normalized_href or (item.match_children and current_url is starting_with(pat=href)) %}
+    {% set active = true %}
+  {% endif %}
+{% endif %}
+<a class="vertical-tab{% if nested %} vertical-tab--nested{% endif %}{% if active %} is-active{% endif %}" href="{{ href }}"{% if active %} aria-current="page"{% endif %}{% if is_external %} rel="external"{% endif %}>{{ item.name }}</a>
+{% endcomponent site.navigation_link %}
+
+{% component site.navigation_group(group: map, active_lang: string, current_url: string = "") %}
+<li>
+  <details class="vertical-group"{% if not group.collapsed %} open{% else %}{% for item in group.category %}{% set is_direct = item.url is matching(pat="^(https?://|mailto:|tel:|#|//)") %}{% if not is_direct %}{% set href = get_url(path=item.url, lang=active_lang, trailing_slash=item.trailing_slash or false) %}{% set normalized_current_url = current_url | trim_end(pat="/") %}{% set normalized_href = href | trim_end(pat="/") %}{% if normalized_current_url == normalized_href or (item.match_children and current_url is starting_with(pat=href)) %} open{% break %}{% endif %}{% endif %}{% endfor %}{% endif %}>
+    <summary class="vertical-tab vertical-tab--group">{{ group.name }}</summary>
+    <ul class="vertical-subtabs">
+      {% for item in group.category %}
+        <li>{{<site.navigation_link item={item} active_lang={active_lang} current_url={current_url} nested={true} />}}</li>
+      {% endfor %}
+    </ul>
+  </details>
+</li>
+{% endcomponent site.navigation_group %}
+
+{% component site.sidebar(site_title: string, messages: map, navigation: map, active_lang: string, default_language: string, current_url: string = "") %}
+{% if active_lang != default_language and navigation[active_lang] and navigation[active_lang].links %}
+  {% set links = navigation[active_lang].links %}
+{% else %}
+  {% set links = navigation.links or [] %}
+{% endif %}
+<aside class="sidebar" id="site-sidebar" tabindex="0">
+  <a class="brand" href="{{ get_url(path=navigation.home_url, lang=active_lang) }}">{{ site_title }}</a>
+
+  <nav class="site-nav" aria-label="{{ messages.primary_navigation }}">
+    <ul class="vertical-tabs">
+      {% for item in links %}
+        {% if item.category %}
+          {{<site.navigation_group group={item} active_lang={active_lang} current_url={current_url} />}}
+        {% elif item.url %}
+          <li>{{<site.navigation_link item={item} active_lang={active_lang} current_url={current_url} />}}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</aside>
+{% endcomponent site.sidebar %}
+
+{% component site.sidebar_toggle(messages: map) %}
+<input class="sidebar-toggle" id="sidebar-toggle" type="checkbox" role="switch" aria-controls="site-sidebar" aria-label="{{ messages.toggle_sidebar }}">
+{% endcomponent site.sidebar_toggle %}
+
+{% component site.language_fallback(code: string, label: string, active_lang: string, home_url: string, taxonomy_name: string = "", taxonomy_term: string = "") %}
+{% if taxonomy_name %}
+  {% set target_taxonomy = get_taxonomy(kind=taxonomy_name, lang=code, required=false) %}
+  {% if taxonomy_term %}
+    {% set target_term = get_taxonomy_term(kind=taxonomy_name, term=taxonomy_term, lang=code, include_pages=false, required=false) %}
+    {% if target_term %}
+      {% set target_url = get_taxonomy_url(kind=taxonomy_name, name=taxonomy_term, lang=code, required=false) %}
+    {% else %}
+      {% set target_url = target_taxonomy.permalink or get_url(path=home_url, lang=code) %}
+    {% endif %}
+  {% else %}
+    {% set target_url = target_taxonomy.permalink or get_url(path=home_url, lang=code) %}
+  {% endif %}
+{% else %}
+  {% set target_url = get_url(path=home_url, lang=code) %}
+{% endif %}
+<li><a href="{{ target_url }}" lang="{{ code }}" hreflang="{{ code }}"{% if active_lang == code %} aria-current="page"{% endif %}>{{ label }}</a></li>
+{% endcomponent site.language_fallback %}
+
+{% component site.utility_menu(messages: map, active_lang: string, default_language: string, translations: array, home_url: string, taxonomy_name: string = "", taxonomy_term: string = "") %}
+<nav class="utility-menu" aria-label="{{ messages.utility_navigation }}">
+  <button class="utility-trigger utility-trigger--language" id="language-trigger" type="button" popovertarget="language-options">{{ messages.language }}</button>
+  <ul class="utility-popover utility-popover--language" id="language-options" popover="auto">
+      {% if translations %}
+        {% for translation in translations %}
+          {% set translation_lang = translation.lang or default_language %}
+          <li>
+            <a href="{{ translation.permalink }}" lang="{{ translation_lang }}" hreflang="{{ translation_lang }}"{% if translation_lang == active_lang %} aria-current="page"{% endif %}>
+              {% if translation_lang == "zh-CN" %}{{ messages.simplified_chinese }}{% else %}{{ messages.english }}{% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      {% else %}
+        {{<site.language_fallback code="en" label={messages.english} active_lang={active_lang} home_url={home_url} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+        {{<site.language_fallback code="zh-CN" label={messages.simplified_chinese} active_lang={active_lang} home_url={home_url} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+      {% endif %}
+  </ul>
+
+  <button class="utility-trigger utility-trigger--feed" id="feed-trigger" type="button" popovertarget="feed-options">{{ messages.feed }}</button>
+  <ul class="utility-popover utility-popover--feed" id="feed-options" popover="auto">
+    <li><a href="{{ get_url(path="atom.xml", lang=active_lang) }}" type="application/atom+xml">{{ messages.atom_feed }}</a></li>
+    <li><a href="{{ get_url(path="rss.xml", lang=active_lang) }}" type="application/rss+xml">{{ messages.rss_feed }}</a></li>
+  </ul>
+</nav>
+{% endcomponent site.utility_menu %}
+
+{% component site.footer(messages: map, options: map) %}
+{% set copyright = options.footer_copyright or "" %}
+{% set show_powered = options.footer_show_powered or false %}
+{% set source_url = options.footer_source_url or "" %}
+{% set socials = options.footer_socials or [] %}
+{% set show_timestamp = options.footer_show_timestamp or false %}
+{% set timezone = options.timezone or "UTC" %}
+{% set build_time = now() %}
+{% set current_year = build_time | date(format="%Y", timezone=timezone) %}
+{% if copyright or show_powered or source_url or socials or show_timestamp %}
+<footer class="site-footer">
+  {% if copyright %}<p>{{ copyright | replace(from="$YEAR", to=current_year) }}</p>{% endif %}
+  {% if show_powered %}
+    {% set zola_link = '<a href="https://www.getzola.org/">Zola</a>' %}
+    {% if source_url %}{% set monochrome_link = '<a href="' ~ source_url ~ '">Monochrome</a>' %}{% else %}{% set monochrome_link = "Monochrome" %}{% endif %}
+    <p>{{ messages.powered_by | replace(from="$ZOLA", to=zola_link) | replace(from="$MONOCHROME", to=monochrome_link) | safe }}</p>
+  {% endif %}
+  {% if source_url %}<p><a href="{{ source_url }}">{{ messages.website_source }}</a></p>{% endif %}
+  {% if socials %}
+    <p>{{ messages.social }}:
+      {% for account in socials %}
+        <a href="{{ account.url }}" rel="me">{{ account.platform }} {{ account.handle }}</a>{% if not loop.last %}<span aria-hidden="true"> / </span>{% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+  {% if show_timestamp %}
+    <p class="site-footer__timestamp"><time datetime="{{ build_time | date(format="%Y-%m-%dT%H:%M:%S%:z", timezone=timezone) }}">{{ build_time | date(format="%Y-%m-%d %H:%M:%S", timezone=timezone) }} {{ timezone }}</time></p>
+  {% endif %}
+</footer>
+{% endif %}
+{% endcomponent site.footer %}

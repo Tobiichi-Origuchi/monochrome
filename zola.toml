@@ -1,0 +1,129 @@
+# The public URL where the site will be hosted.
+# Replace this development address before deploying the site.
+base_url = "http://127.0.0.1:1111"
+
+# The default site title and description. They are used in page titles,
+# metadata, feeds, and the sidebar brand.
+title = "Monochrome"
+description = "A minimal journal about design and the web."
+
+# The default language is served without a language prefix in its URLs.
+# Every additional language must be declared in a [languages.<code>] table.
+default_language = "en"
+
+# Compile sass/site.scss and its modules into public/site.css.
+compile_sass = true
+
+# Monochrome does not include a client-side search interface.
+build_search_index = false
+
+# Generate both feed formats shown in the Feed menu.
+generate_feeds = true
+feed_filenames = ["atom.xml", "rss.xml"]
+
+# Taxonomies must also be repeated for every additional language below.
+taxonomies = [{ name = "tags" }]
+
+[markdown]
+# Convert aliases such as :sparkles: into Unicode emoji.
+render_emoji = true
+# This class adds the theme's external-link indicator to Markdown links.
+external_links_class = "external-link"
+# Enable definition lists using the `Term` / `: Definition` syntax.
+definition_list = true
+# Add native lazy loading and asynchronous decoding to Markdown images.
+lazy_async_image = true
+# Collect footnotes at the end of the document.
+bottom_footnotes = true
+# Enable GitHub-style NOTE, TIP, IMPORTANT, WARNING, and CAUTION blocks.
+github_alerts = true
+
+[markdown.highlighting]
+# Stop the build when a fenced code block names an unknown language.
+error_on_missing_language = true
+# Class-based highlighting keeps all generated HTML free of inline styles.
+style = "class"
+# These stylesheets are selected automatically by prefers-color-scheme.
+light_theme = "github-light"
+dark_theme = "github-dark"
+
+[link_checker]
+# URLs with these prefixes are trusted and excluded from external link checks.
+skip_prefixes = ["https://www.getzola.org/"]
+
+[languages.zh-CN]
+# Language-specific site metadata.
+title = "黑白"
+description = "关于设计与网络的极简日志。"
+# Feeds and taxonomies are configured independently for each language.
+generate_feeds = true
+feed_filenames = ["atom.xml", "rss.xml"]
+taxonomies = [{ name = "tags" }]
+
+[extra]
+# Directory containing one UI translation file per language code.
+# For example, zh-CN loads i18n/zh-CN.toml.
+i18n_path = "i18n/"
+
+# Optional progressive enhancement for code blocks.
+# When false, no copy button is rendered and no copy script is loaded.
+enable_code_copy = false
+
+# Footer lines are independent. Use an empty string, false, or an empty array
+# to hide the corresponding line.
+# `$YEAR` is replaced with the current year in the configured timezone.
+footer_copyright = "© $YEAR Monochrome"
+# Show the “Powered by Zola and Monochrome” line.
+footer_show_powered = true
+# When set, “Website Source” becomes a link to this address.
+footer_source_url = "https://github.com/Tobiichi-Origuchi/monochrome"
+# Add, remove, or reorder accounts as needed.
+footer_socials = [
+  { platform = "GitHub", handle = "@Tobiichi-Origuchi", url = "https://github.com/Tobiichi-Origuchi" },
+]
+# Show the time at which Zola built the site.
+footer_show_timestamp = true
+# Timestamp and `$YEAR` timezone. UTC is used when this option is omitted.
+# timezone = "Asia/Shanghai"
+
+[extra.nav]
+# Destination of the sidebar brand, the 404 return link, and language fallback
+# links for ordinary pages that do not have a translation.
+home_url = "@/_index.md"
+
+# Sidebar navigation is defined entirely by this list.
+#
+# Link entries:
+# - `url` accepts Zola internal links (`@/...`), generated paths such as
+#   `tags`, and absolute external URLs.
+# - `name` is the visible label.
+# - `match_children = true` keeps a section active on its descendant pages.
+# - `trailing_slash = true` is useful for taxonomies and other directory URLs.
+#
+# Category entries use `name` and `category` instead of `url`.
+# Set `collapsed = true` to close a category initially. Omit it or set it to
+# false to render the category expanded. Categories use native details/summary
+# and therefore work without JavaScript.
+links = [
+  { url = "@/_index.md", name = "Home" },
+  { url = "@/posts/_index.md", name = "Posts", match_children = true },
+  { name = "More", collapsed = true, category = [
+    { url = "tags", name = "Tags", trailing_slash = true, match_children = true },
+    { url = "@/about.md", name = "About" },
+    { url = "@/demo/index.md", name = "Demo" },
+  ] },
+]
+
+[extra.nav.zh-CN]
+# A language-specific list replaces the default navigation labels and links.
+# The table name must exactly match the language code declared above.
+# If this table is omitted, the default [extra.nav].links list is used.
+links = [
+  { url = "@/_index.md", name = "首页" },
+  { url = "@/posts/_index.md", name = "文章", match_children = true },
+  { name = "更多", collapsed = true, category = [
+    { url = "tags", name = "标签", trailing_slash = true, match_children = true },
+    { url = "@/about.md", name = "关于" },
+    { url = "@/demo/index.md", name = "演示" },
+  ] },
+]

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title description">
+  <title id="title">Monochrome geometry</title>
+  <desc id="description">Black, gray, and white rectangular shapes arranged on a grid.</desc>
+  <rect width="960" height="540" fill="#f3f3f3"/>
+  <path d="M0 90h960M0 180h960M0 270h960M0 360h960M0 450h960M160 0v540M320 0v540M480 0v540M640 0v540M800 0v540" stroke="#d6d6d6"/>
+  <rect x="160" y="90" width="320" height="180" fill="#111"/>
+  <rect x="480" y="270" width="320" height="180" fill="#666"/>
+  <rect x="320" y="180" width="320" height="180" fill="none" stroke="#111" stroke-width="8"/>
+</svg>

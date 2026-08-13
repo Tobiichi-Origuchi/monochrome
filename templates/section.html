@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title or messages.untitled }} · {{ config.title }}{% endblock title %}
+{% block description %}{{ section.description or config.description }}{% endblock description %}
+
+{% block content %}
+  {{<ui.page_header title={section.title or messages.untitled} eyebrow={messages.section} description={section.description or ""} />}}
+  {{<content.post_list posts={section.pages} messages={messages} />}}
+{% endblock content %}

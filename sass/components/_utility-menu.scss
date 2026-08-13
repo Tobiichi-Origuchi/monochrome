@@ -1,0 +1,167 @@
+.sidebar-toggle {
+  appearance: none;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-position:
+    center calc(50% - 0.35rem),
+    center,
+    center calc(50% + 0.35rem);
+  background-repeat: no-repeat;
+  background-size: 1.15rem 1px;
+  border: 0;
+  border-block-end: 1px solid var(--line);
+  border-inline: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  height: var(--utility-height);
+  inset-block-start: 0;
+  inset-inline-start: calc(var(--sidebar-width) + var(--frame-gutter));
+  margin: 0;
+  position: fixed;
+  width: var(--utility-height);
+  z-index: 8;
+
+  &:hover {
+    background-color: var(--surface);
+  }
+
+  &:focus-visible {
+    outline: 0.15rem solid var(--strong-line);
+    outline-offset: -0.15rem;
+  }
+
+  &:checked {
+    inset-inline-start: var(--frame-gutter);
+  }
+}
+
+.utility-menu {
+  align-items: stretch;
+  background: var(--background);
+  border-block-end: 1px solid var(--line);
+  display: flex;
+  flex: 0 0 var(--utility-height);
+  justify-content: flex-end;
+  margin-inline: var(--frame-gutter);
+  min-height: var(--utility-height);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+@media (max-width: 64rem) {
+  .sidebar-toggle {
+    inset-inline-start: var(--frame-gutter);
+
+    &:checked {
+      inset-inline-start: calc(var(--sidebar-width) + var(--frame-gutter));
+    }
+  }
+}
+
+.utility-trigger {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-inline-start: 1px solid var(--line);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.8rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: auto;
+
+  &::after {
+    content: "\25BE";
+    margin-inline-start: 0.4rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: var(--surface);
+  }
+
+  &:focus-visible {
+    outline: 0.15rem solid var(--strong-line);
+    outline-offset: -0.15rem;
+  }
+}
+
+.utility-trigger--feed {
+  border-inline-end: 1px solid var(--line);
+}
+
+#language-trigger {
+  anchor-name: --language-trigger;
+}
+
+#feed-trigger {
+  anchor-name: --feed-trigger;
+}
+
+.utility-popover {
+  background: var(--background);
+  border: 1px solid var(--strong-line);
+  color: var(--text);
+  inline-size: max-content;
+  inset: auto;
+  list-style: none;
+  margin: 0;
+  max-inline-size: calc(100vw - var(--frame-gutter) - var(--frame-gutter));
+  padding: 0;
+  position: fixed;
+  right: anchor(right);
+  top: anchor(bottom);
+
+  &::backdrop {
+    background: transparent;
+  }
+
+  li + li {
+    border-block-start: 1px solid var(--line);
+  }
+
+  a {
+    display: block;
+    font-size: 0.85rem;
+    padding: 0.65rem 0.8rem;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover,
+    &[aria-current="page"] {
+      background: var(--surface);
+    }
+
+    &[aria-current="page"] {
+      font-weight: 700;
+    }
+  }
+}
+
+.utility-popover--language {
+  position-anchor: --language-trigger;
+}
+
+.utility-popover--feed {
+  position-anchor: --feed-trigger;
+}
+
+@media (max-width: 42rem) {
+  .sidebar-toggle,
+  .sidebar-toggle:checked {
+    inset-inline-start: var(--frame-gutter);
+  }
+
+  .utility-trigger {
+    font-size: 0.7rem;
+    padding-inline: 0.5rem;
+  }
+}

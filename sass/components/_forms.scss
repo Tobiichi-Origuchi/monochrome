@@ -1,0 +1,65 @@
+.prose fieldset {
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.prose legend {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-weight: 750;
+  padding-inline: 0.35rem;
+}
+
+.prose label {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.prose input,
+.prose select,
+.prose textarea {
+  accent-color: var(--text);
+  background: var(--background);
+  border: 1px solid var(--strong-line);
+  color: var(--text);
+  font: inherit;
+  max-width: 100%;
+  padding: 0.5rem 0.6rem;
+
+  &:focus-visible {
+    outline: 0.15rem solid var(--strong-line);
+    outline-offset: 0.15rem;
+  }
+}
+
+.prose textarea {
+  resize: vertical;
+  width: 100%;
+}
+
+.progress-example {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  margin-block: 1rem;
+
+  label {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  progress {
+    display: block;
+    inline-size: 100%;
+  }
+}
+
+.meter-example {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+
+  meter {
+    flex: 1;
+  }
+}

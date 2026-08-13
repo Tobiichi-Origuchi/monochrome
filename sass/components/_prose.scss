@@ -1,0 +1,277 @@
+.prose {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  font-size: 1.08rem;
+  max-width: 42rem;
+  overflow-wrap: break-word;
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin-block: 2.5rem 0.8rem;
+    scroll-margin-block-start: 1rem;
+  }
+
+  h2 {
+    border-block-end: 1px solid var(--line);
+    font-size: 1.75rem;
+    padding-block-end: 0.45rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.15rem;
+  }
+
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+
+  h6 {
+    color: var(--muted);
+  }
+
+  p,
+  ul,
+  ol,
+  dl,
+  blockquote,
+  table,
+  figure,
+  fieldset,
+  details {
+    margin-block: 1rem;
+  }
+
+  ul,
+  ol {
+    padding-inline-start: 1.4rem;
+
+    ul,
+    ol {
+      margin-block: 0.3rem;
+    }
+  }
+
+  li + li {
+    margin-block-start: 0.25rem;
+  }
+
+  li > input[type="checkbox"] {
+    margin-inline: -1.2rem 0.45rem;
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    border-inline-start: 0.2rem solid var(--line);
+    margin: 0.35rem 0 0.85rem;
+    padding-inline-start: 0.8rem;
+  }
+
+  blockquote {
+    border-inline-start: 0.25rem solid var(--strong-line);
+    color: var(--muted);
+    margin-inline: 0;
+    padding: 0.2rem 1rem;
+
+    > :first-child {
+      margin-block-start: 0;
+    }
+
+    > :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  strong {
+    font-weight: 750;
+  }
+
+  del {
+    color: var(--muted);
+  }
+
+  ins {
+    text-decoration-style: double;
+    text-underline-offset: 0.16em;
+  }
+
+  abbr[title] {
+    cursor: help;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.16em;
+  }
+
+  mark {
+    background: var(--selection);
+    color: var(--text);
+    padding-inline: 0.15em;
+  }
+
+  small {
+    color: var(--muted);
+  }
+
+  hr {
+    border: 0;
+    border-block-start: 1px solid var(--strong-line);
+    margin-block: 2.5rem;
+  }
+
+  a:not(.button) {
+    overflow-wrap: anywhere;
+  }
+
+  .external-link::after {
+    content: "\2197";
+    display: inline-block;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.75em;
+    margin-inline-start: 0.18em;
+    text-decoration: none;
+  }
+
+  table {
+    border-collapse: collapse;
+    display: block;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.92rem;
+    max-width: 100%;
+    overflow-x: auto;
+    width: max-content;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--line);
+    padding: 0.55rem 0.75rem;
+    text-align: start;
+  }
+
+  th {
+    background: var(--surface);
+    border-block-end-color: var(--strong-line);
+    font-weight: 700;
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--surface);
+  }
+}
+
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution {
+  background: var(--surface);
+  border: 1px solid var(--line) !important;
+  color: var(--text) !important;
+  padding: 0.85rem 1rem !important;
+
+  &::before {
+    color: var(--alert-title-color);
+    display: block;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    margin-block-end: 0.4rem;
+  }
+}
+
+.markdown-alert-note {
+  --alert-title-color: var(--alert-note);
+
+  &::before {
+    content: "NOTE";
+  }
+}
+
+.markdown-alert-tip {
+  --alert-title-color: var(--alert-tip);
+
+  &::before {
+    content: "TIP";
+  }
+}
+
+.markdown-alert-important {
+  --alert-title-color: var(--alert-important);
+
+  &::before {
+    content: "IMPORTANT";
+  }
+}
+
+.markdown-alert-warning {
+  --alert-title-color: var(--alert-warning);
+
+  &::before {
+    content: "WARNING";
+  }
+}
+
+.markdown-alert-caution {
+  --alert-title-color: var(--alert-caution);
+
+  &::before {
+    content: "CAUTION";
+  }
+}
+
+.markdown-alert-note:lang(zh-CN)::before {
+  content: "注意";
+}
+
+.markdown-alert-tip:lang(zh-CN)::before {
+  content: "提示";
+}
+
+.markdown-alert-important:lang(zh-CN)::before {
+  content: "重要";
+}
+
+.markdown-alert-warning:lang(zh-CN)::before {
+  content: "警告";
+}
+
+.markdown-alert-caution:lang(zh-CN)::before {
+  content: "危险";
+}
+
+.footnote-reference {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.72em;
+  line-height: 0;
+}
+
+.footnotes {
+  border-block-start: 1px solid var(--strong-line);
+  font-size: 0.88rem;
+  margin-block-start: 2.5rem;
+  padding-block-start: 1rem;
+}
+
+.footnotes-list {
+  margin-block: 0;
+}

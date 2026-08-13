@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}{{ messages.all_tags }} · {{ config.title }}{% endblock title %}
+
+{% block content %}
+  {{<ui.page_header title={messages.all_tags} eyebrow={messages.tags} />}}
+  {{<content.term_list terms={terms} messages={messages} active_lang={active_lang} />}}
+{% endblock content %}

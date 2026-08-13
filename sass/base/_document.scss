@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  height: 100%;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  min-width: 20rem;
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+
+  &:hover {
+    text-decoration-thickness: 0.16em;
+  }
+
+  &:focus-visible {
+    outline: 0.15rem solid var(--strong-line);
+    outline-offset: 0.2rem;
+  }
+}
