@@ -114,11 +114,13 @@
 {%- set show_powered = options.footer_show_powered or false -%}
 {%- set source_url = options.footer_source_url or "" -%}
 {%- set socials = options.footer_socials or [] -%}
+{%- set icp = options.icp or "" -%}
+{%- set icp_url = options.icp_url or "" -%}
 {%- set show_timestamp = options.footer_show_timestamp or false -%}
 {%- set timezone = options.timezone or "UTC" -%}
 {%- set build_time = now() -%}
 {%- set current_year = build_time | date(format="%Y", timezone=timezone) -%}
-{%- if copyright or show_powered or source_url or socials or show_timestamp %}
+{%- if copyright or show_powered or source_url or socials or (icp and icp_url) or show_timestamp %}
 <footer class="site-footer">
   {% if copyright %}<p>{{ copyright | replace(from="$YEAR", to=current_year) }}</p>{% endif %}
   {% if show_powered -%}
@@ -130,6 +132,7 @@
   {% if socials %}
     <p>{{ messages.social }}:{% for account in socials %} <a href="{{ account.url }}" rel="me">{% if account.icon %}{{<icon.simple slug={account.icon} />}} {% endif %}{{ account.platform }} {{ account.handle }}</a>{% if not loop.last %}<span aria-hidden="true"> / </span>{% endif %}{% endfor %}</p>
   {% endif %}
+  {% if icp and icp_url %}<p><a href="{{ icp_url }}" target="_blank" rel="noopener">{{ icp }}</a></p>{% endif %}
   {% if show_timestamp %}
     <p class="site-footer__timestamp"><time datetime="{{ build_time | date(format="%Y-%m-%dT%H:%M:%S%:z", timezone=timezone) }}">{{ build_time | date(format="%Y-%m-%d %H:%M:%S", timezone=timezone) }} {{ timezone }}</time></p>
   {% endif %}

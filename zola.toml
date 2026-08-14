@@ -80,6 +80,11 @@ footer_source_url = "https://github.com/Tobiichi-Origuchi/monochrome"
 footer_socials = [
   { platform = "GitHub", handle = "@Tobiichi-Origuchi", url = "https://github.com/Tobiichi-Origuchi", icon = "github" },
 ]
+# Optional public-security or ICP filing. Both values are required; the footer
+# omits this line when either one is empty or missing.
+# icp = "萌ICP备20268688号"
+# icp_url = "https://icp.gov.moe/?keyword=20268688"
+#
 # Show the time at which Zola built the site.
 footer_show_timestamp = true
 # Timestamp and `$YEAR` timezone. UTC is used when this option is omitted.
