@@ -22,7 +22,7 @@
       {{<site.sidebar_toggle messages={messages} />}}
       {{<site.sidebar site_title={config.title} messages={messages} navigation={config.extra.nav} active_lang={active_lang} default_language={config.default_language} current_url={current_url or ""} />}}
       <div class="page-column">
-        {{<site.utility_menu messages={messages} active_lang={active_lang} default_language={config.default_language} translations={page?.translations or section?.translations or []} home_url={config.extra.nav.home_url} taxonomy_name={taxonomy?.name or ""} taxonomy_term={term?.name or ""} />}}
+        {{<site.utility_menu messages={messages} active_lang={active_lang} default_language={config.default_language} languages={config.languages} translations={page?.translations or section?.translations or []} home_url={config.extra.nav.home_url} i18n_path={config.extra.i18n_path} taxonomy_name={taxonomy?.name or ""} taxonomy_term={term?.name or ""} />}}
         <main id="content" tabindex="-1">
           {% block content %}{% endblock content %}
         </main>

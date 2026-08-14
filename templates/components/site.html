@@ -57,7 +57,8 @@
 <input class="sidebar-toggle" id="sidebar-toggle" type="checkbox" role="switch" aria-controls="site-sidebar" aria-label="{{ messages.toggle_sidebar }}">
 {%- endcomponent site.sidebar_toggle %}
 
-{% component site.language_fallback(code: string, label: string, active_lang: string, home_url: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
+{% component site.language_fallback(code: string, active_lang: string, home_url: string, i18n_path: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
+{%- set language_messages = load_data(path=i18n_path ~ code ~ ".toml") -%}
 {%- if taxonomy_name -%}
   {%- set target_taxonomy = get_taxonomy(kind=taxonomy_name, lang=code, required=false) -%}
   {%- if taxonomy_term -%}
@@ -73,25 +74,28 @@
 {%- else -%}
   {%- set target_url = get_url(path=home_url, lang=code) -%}
 {%- endif -%}
-<li><a href="{{ target_url }}" lang="{{ code }}" hreflang="{{ code }}"{% if active_lang == code %} aria-current="page"{% endif %}>{{ label }}</a></li>
+<li><a href="{{ target_url }}" lang="{{ code }}" hreflang="{{ code }}"{% if active_lang == code %} aria-current="page"{% endif %}>{{ language_messages.language_name or code }}</a></li>
 {%- endcomponent site.language_fallback %}
 
-{% component site.utility_menu(messages: map, active_lang: string, default_language: string, translations: array, home_url: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
+{% component site.utility_menu(messages: map, active_lang: string, default_language: string, languages: map, translations: array, home_url: string, i18n_path: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
 <nav class="utility-menu" aria-label="{{ messages.utility_navigation }}">
   <button class="utility-trigger utility-trigger--language" id="language-trigger" type="button" popovertarget="language-options">{{ messages.language }}</button>
   <ul class="utility-popover utility-popover--language" id="language-options" popover="auto">
       {%- if translations %}
         {%- for translation in translations %}
           {%- set translation_lang = translation.lang or default_language %}
+          {%- set language_messages = load_data(path=i18n_path ~ translation_lang ~ ".toml") %}
           <li>
             <a href="{{ translation.permalink }}" lang="{{ translation_lang }}" hreflang="{{ translation_lang }}"{% if translation_lang == active_lang %} aria-current="page"{% endif %}>
-              {% if translation_lang == "zh-CN" %}{{ messages.simplified_chinese }}{% else %}{{ messages.english }}{% endif %}
+              {{ language_messages.language_name or translation_lang }}
             </a>
           </li>
         {%- endfor %}
       {%- else %}
-        {{<site.language_fallback code="en" label={messages.english} active_lang={active_lang} home_url={home_url} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
-        {{<site.language_fallback code="zh-CN" label={messages.simplified_chinese} active_lang={active_lang} home_url={home_url} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+        {{<site.language_fallback code={active_lang} active_lang={active_lang} home_url={home_url} i18n_path={i18n_path} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+        {%- for code, language_config in languages %}
+          {{<site.language_fallback code={code} active_lang={active_lang} home_url={home_url} i18n_path={i18n_path} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+        {%- endfor %}
       {%- endif %}
   </ul>
 

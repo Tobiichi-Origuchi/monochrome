@@ -50,7 +50,7 @@ style = "class"
 light_theme = "github-light"
 dark_theme = "github-dark"
 
-[languages.zh-CN]
+[languages.zh-Hans]
 # Language-specific site metadata.
 title = "黑白"
 description = "关于设计与网络的极简日志。"
@@ -61,7 +61,7 @@ taxonomies = [{ name = "tags" }]
 
 [extra]
 # Directory containing one UI translation file per language code.
-# For example, zh-CN loads i18n/zh-CN.toml.
+# Each file name must exactly match its Zola language code.
 i18n_path = "i18n/"
 
 # Optional progressive enhancement for code blocks.
@@ -136,7 +136,7 @@ links = [
   ] },
 ]
 
-[extra.nav.zh-CN]
+[extra.nav.zh-Hans]
 # A language-specific list replaces the default navigation labels and links.
 # The table name must exactly match the language code declared above.
 # If this table is omitted, the default [extra.nav].links list is used.

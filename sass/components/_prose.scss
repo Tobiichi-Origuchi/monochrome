@@ -1,3 +1,5 @@
+@use "../abstracts/mixins" as *;
+
 .prose {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
   font-size: 1.08rem;
@@ -192,37 +194,11 @@
   background: var(--surface);
   border: 1px solid var(--line) !important;
   border-inline-start: 0.25rem solid var(--alert-title-color) !important;
-  column-gap: 0.45rem;
   color: var(--text) !important;
-  display: grid;
-  grid-template-columns: 1rem minmax(0, 1fr);
   padding: 0.85rem 1rem !important;
 
-  &::before {
-    align-self: end;
-    color: var(--alert-title-color);
-    display: block;
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.72rem;
-    font-weight: 750;
-    grid-column: 2;
-    grid-row: 1;
-    letter-spacing: 0.1em;
-    line-height: 1;
-    margin-block-end: 0.4rem;
-  }
-
-  > .markdown-alert__icon {
-    align-self: end;
-    color: var(--alert-title-color);
-    font-size: 1rem;
-    grid-column: 1;
-    grid-row: 1;
-    margin-block-end: 0.4rem;
-  }
-
-  > :not(.markdown-alert__icon) {
-    grid-column: 1 / -1;
+  > .markdown-alert__title {
+    @include alert-title;
   }
 
   > p:first-of-type {
@@ -232,62 +208,22 @@
 
 .markdown-alert-note {
   --alert-title-color: var(--alert-note);
-
-  &::before {
-    content: "NOTE";
-  }
 }
 
 .markdown-alert-tip {
   --alert-title-color: var(--alert-tip);
-
-  &::before {
-    content: "TIP";
-  }
 }
 
 .markdown-alert-important {
   --alert-title-color: var(--alert-important);
-
-  &::before {
-    content: "IMPORTANT";
-  }
 }
 
 .markdown-alert-warning {
   --alert-title-color: var(--alert-warning);
-
-  &::before {
-    content: "WARNING";
-  }
 }
 
 .markdown-alert-caution {
   --alert-title-color: var(--alert-caution);
-
-  &::before {
-    content: "CAUTION";
-  }
-}
-
-.markdown-alert-note:lang(zh-CN)::before {
-  content: "注意";
-}
-
-.markdown-alert-tip:lang(zh-CN)::before {
-  content: "提示";
-}
-
-.markdown-alert-important:lang(zh-CN)::before {
-  content: "重要";
-}
-
-.markdown-alert-warning:lang(zh-CN)::before {
-  content: "警告";
-}
-
-.markdown-alert-caution:lang(zh-CN)::before {
-  content: "危险";
 }
 
 .footnote-reference {

@@ -20,3 +20,22 @@
     scrollbar-width: thin;
   }
 }
+
+@mixin alert-title {
+  align-items: flex-end;
+  color: var(--alert-title-color);
+  display: flex;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 750;
+  gap: 0.45rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  margin: 0 0 0.4rem !important;
+  text-transform: uppercase;
+
+  > .simple-icon,
+  > .phosphor-icon {
+    font-size: 1rem;
+  }
+}

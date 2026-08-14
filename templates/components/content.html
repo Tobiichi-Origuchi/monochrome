@@ -19,27 +19,31 @@
 </aside>
 {%- endcomponent content.notice %}
 
-{% component content.alert_icons(html: string, mode: string = "", provider: string = "", version: string = "", weight: string = "") -%}
+{% component content.alert_heading(title: string, icon: string, mode: string = "", provider: string = "", version: string = "", weight: string = "") -%}
+<div class="markdown-alert__title">{{<icon.phosphor name={icon} weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}<span>{{ title }}</span></div>
+{%- endcomponent content.alert_heading %}
+
+{% component content.alert_icons(html: string, messages: map, mode: string = "", provider: string = "", version: string = "", weight: string = "") -%}
 {%- set rendered = html -%}
 {%- if rendered is containing(pat='<blockquote class="markdown-alert-note">') -%}
-  {%- set alert_icon -%}{{<icon.phosphor name="info" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
-  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-note">', to='<blockquote class="markdown-alert-note">' ~ alert_icon) -%}
+  {%- set alert_heading -%}{{<content.alert_heading title={messages.alert_note or "Note"} icon="info" weight={weight} mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-note">', to='<blockquote class="markdown-alert-note">' ~ alert_heading) -%}
 {%- endif -%}
 {%- if rendered is containing(pat='<blockquote class="markdown-alert-tip">') -%}
-  {%- set alert_icon -%}{{<icon.phosphor name="lightbulb" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
-  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-tip">', to='<blockquote class="markdown-alert-tip">' ~ alert_icon) -%}
+  {%- set alert_heading -%}{{<content.alert_heading title={messages.alert_tip or "Tip"} icon="lightbulb" weight={weight} mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-tip">', to='<blockquote class="markdown-alert-tip">' ~ alert_heading) -%}
 {%- endif -%}
 {%- if rendered is containing(pat='<blockquote class="markdown-alert-important">') -%}
-  {%- set alert_icon -%}{{<icon.phosphor name="warning-diamond" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
-  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-important">', to='<blockquote class="markdown-alert-important">' ~ alert_icon) -%}
+  {%- set alert_heading -%}{{<content.alert_heading title={messages.alert_important or "Important"} icon="warning-diamond" weight={weight} mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-important">', to='<blockquote class="markdown-alert-important">' ~ alert_heading) -%}
 {%- endif -%}
 {%- if rendered is containing(pat='<blockquote class="markdown-alert-warning">') -%}
-  {%- set alert_icon -%}{{<icon.phosphor name="warning" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
-  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-warning">', to='<blockquote class="markdown-alert-warning">' ~ alert_icon) -%}
+  {%- set alert_heading -%}{{<content.alert_heading title={messages.alert_warning or "Warning"} icon="warning" weight={weight} mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-warning">', to='<blockquote class="markdown-alert-warning">' ~ alert_heading) -%}
 {%- endif -%}
 {%- if rendered is containing(pat='<blockquote class="markdown-alert-caution">') -%}
-  {%- set alert_icon -%}{{<icon.phosphor name="warning-octagon" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
-  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-caution">', to='<blockquote class="markdown-alert-caution">' ~ alert_icon) -%}
+  {%- set alert_heading -%}{{<content.alert_heading title={messages.alert_caution or "Caution"} icon="warning-octagon" weight={weight} mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-caution">', to='<blockquote class="markdown-alert-caution">' ~ alert_heading) -%}
 {%- endif -%}
 {{- rendered | safe -}}
 {%- endcomponent content.alert_icons %}
