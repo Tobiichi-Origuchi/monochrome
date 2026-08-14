@@ -191,17 +191,42 @@
 .markdown-alert-caution {
   background: var(--surface);
   border: 1px solid var(--line) !important;
+  border-inline-start: 0.25rem solid var(--alert-title-color) !important;
+  column-gap: 0.45rem;
   color: var(--text) !important;
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr);
   padding: 0.85rem 1rem !important;
 
   &::before {
+    align-self: end;
     color: var(--alert-title-color);
     display: block;
     font-family: ui-sans-serif, system-ui, sans-serif;
     font-size: 0.72rem;
     font-weight: 750;
+    grid-column: 2;
+    grid-row: 1;
     letter-spacing: 0.1em;
+    line-height: 1;
     margin-block-end: 0.4rem;
+  }
+
+  > .markdown-alert__icon {
+    align-self: end;
+    color: var(--alert-title-color);
+    font-size: 1rem;
+    grid-column: 1;
+    grid-row: 1;
+    margin-block-end: 0.4rem;
+  }
+
+  > :not(.markdown-alert__icon) {
+    grid-column: 1 / -1;
+  }
+
+  > p:first-of-type {
+    margin-block-start: 0;
   }
 }
 

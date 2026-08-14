@@ -1,16 +1,22 @@
 .notice {
+  --alert-title-color: var(--text);
   background: var(--surface);
   border: 1px solid var(--line);
+  border-inline-start: 0.25rem solid var(--alert-title-color);
   margin-block: 1rem;
   padding: 0.85rem 1rem;
 }
 
 .notice__title {
-  color: var(--alert-title-color, var(--text));
+  align-items: flex-end;
+  color: var(--alert-title-color);
+  display: flex;
   font-family: ui-sans-serif, system-ui, sans-serif;
   font-size: 0.72rem;
   font-weight: 750;
+  gap: 0.45rem;
   letter-spacing: 0.1em;
+  line-height: 1;
   margin: 0 0 0.4rem !important;
   text-transform: uppercase;
 }

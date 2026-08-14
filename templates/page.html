@@ -16,7 +16,7 @@
     {% endif %}
 
     <div class="prose">
-      {{ page.content | safe }}
+      {{<content.alert_icons html={page.content} />}}
     </div>
   </article>
 {% endblock content %}

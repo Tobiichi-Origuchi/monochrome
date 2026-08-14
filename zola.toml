@@ -97,6 +97,15 @@ provider = "jsdelivr"
 # reproducible and prevents a removed icon from unexpectedly returning 404.
 version = "v16"
 
+[extra.phosphor_icons]
+# Phosphor icons use the same build-time modes and CDN providers as Simple
+# Icons. `regular` is used when weight is omitted.
+mode = "inline"
+provider = "jsdelivr"
+weight = "regular"
+# Omit `version` to use `latest`.
+version = "2"
+
 [extra.nav]
 # Destination of the sidebar brand, the 404 return link, and language fallback
 # links for ordinary pages that do not have a translation.

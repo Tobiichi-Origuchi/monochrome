@@ -1,18 +1,48 @@
-{% component content.code_block(language: string = "text") -%}
+{% component content.code_block(language: string = "text", linenos: bool = false, linenostart: integer = 1, hl_lines: string = "", hide_lines: string = "") -%}
 {%- set code = body | trim_start(pat="\n") | trim_end(pat="\n") -%}
-{%- set fenced_code = "```" ~ language ~ "\n" ~ code ~ "\n```" -%}
+{%- set fence = language -%}
+{%- if linenos -%}{%- set fence = fence ~ ",linenos" -%}{%- endif -%}
+{%- if linenostart != 1 -%}{%- set fence = fence ~ ",linenostart=" ~ linenostart -%}{%- endif -%}
+{%- if hl_lines -%}{%- set fence = fence ~ ",hl_lines=" ~ hl_lines -%}{%- endif -%}
+{%- if hide_lines -%}{%- set fence = fence ~ ",hide_lines=" ~ hide_lines -%}{%- endif -%}
+{%- set fenced_code = "```" ~ fence ~ "\n" ~ code ~ "\n```" -%}
 <figure class="code-block">
   <figcaption>{{ language }}</figcaption>
   {{ fenced_code | markdown | safe }}
 </figure>
 {%- endcomponent content.code_block %}
 
-{% component content.notice(kind: string = "note", title: string = "Note") -%}
+{% component content.notice(kind: string = "note", title: string = "Note", icon: string = "", icon_weight: string = "") -%}
 <aside class="notice notice--{{ kind }}">
-  <p class="notice__title">{{ title }}</p>
+  <p class="notice__title">{% if icon %}{{<icon.phosphor name={icon} weight={icon_weight} />}}{% endif %}<span>{{ title }}</span></p>
   <div class="notice__body">{{ body | markdown | safe }}</div>
 </aside>
 {%- endcomponent content.notice %}
+
+{% component content.alert_icons(html: string, mode: string = "", provider: string = "", version: string = "", weight: string = "") -%}
+{%- set rendered = html -%}
+{%- if rendered is containing(pat='<blockquote class="markdown-alert-note">') -%}
+  {%- set alert_icon -%}{{<icon.phosphor name="info" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-note">', to='<blockquote class="markdown-alert-note">' ~ alert_icon) -%}
+{%- endif -%}
+{%- if rendered is containing(pat='<blockquote class="markdown-alert-tip">') -%}
+  {%- set alert_icon -%}{{<icon.phosphor name="lightbulb" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-tip">', to='<blockquote class="markdown-alert-tip">' ~ alert_icon) -%}
+{%- endif -%}
+{%- if rendered is containing(pat='<blockquote class="markdown-alert-important">') -%}
+  {%- set alert_icon -%}{{<icon.phosphor name="warning-diamond" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-important">', to='<blockquote class="markdown-alert-important">' ~ alert_icon) -%}
+{%- endif -%}
+{%- if rendered is containing(pat='<blockquote class="markdown-alert-warning">') -%}
+  {%- set alert_icon -%}{{<icon.phosphor name="warning" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-warning">', to='<blockquote class="markdown-alert-warning">' ~ alert_icon) -%}
+{%- endif -%}
+{%- if rendered is containing(pat='<blockquote class="markdown-alert-caution">') -%}
+  {%- set alert_icon -%}{{<icon.phosphor name="warning-octagon" weight={weight} extra_class="markdown-alert__icon" mode={mode} provider={provider} version={version} />}}{%- endset -%}
+  {%- set rendered = rendered | replace(from='<blockquote class="markdown-alert-caution">', to='<blockquote class="markdown-alert-caution">' ~ alert_icon) -%}
+{%- endif -%}
+{{- rendered | safe -}}
+{%- endcomponent content.alert_icons %}
 
 {% component content.disclosure(summary: string) -%}
 <details class="disclosure">

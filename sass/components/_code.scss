@@ -82,18 +82,27 @@
 
 .giallo-l {
   display: inline-block;
+  line-height: inherit;
   min-height: 1lh;
   width: 100%;
 }
 
 .giallo-ln {
   display: inline-block;
-  margin-inline-end: 0.4em;
+  line-height: inherit;
+  margin-inline-end: 0.75em;
   min-width: 3ch;
   opacity: 0.8;
-  padding: 0.4em;
+  padding: 0;
   text-align: end;
   user-select: none;
+}
+
+.giallo-l.z-l-hl,
+.giallo-l.z-d-hl {
+  margin-inline: -1rem;
+  padding-inline: 1rem;
+  width: calc(100% + 2rem);
 }
 
 .prose pre mark {

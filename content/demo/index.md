@@ -18,9 +18,11 @@ This is an [internal link](@/about.md), an [external link](https://www.getzola.o
 {{<content.button label="Primary action" href="#tables" />}}
 {{<content.button label="Secondary action" href="#media" variant="secondary" icon="simpleicons" />}}
 
-## Simple Icons
+## Icons
 
 These are the Simple Icons {{<icon.simple slug="simpleicons" />}} and GitHub {{<icon.simple slug="github" />}} marks. Search for all available icons [here](https://simpleicons.org/).
+
+Also support Phosphor Icons {{<icon.phosphor name="phosphor-logo" />}} and Github {{<icon.phosphor name="github-logo" />}} marks. Search for all available icons [here](https://phosphoricons.com/).
 
 ## Headings
 
@@ -84,18 +86,18 @@ This notice is rendered by a reusable Zola component.
 
 ## Code
 
-Inline code looks like `cargo build`.
-
-```toml
-title = "Monochrome"
-compile_sass = true
-```
-
-{% <content.code_block language="rust"> %}
-fn main() {
-    println!("Hello from Zola");
+```scss, linenos, linenostart=10, hl_lines=3-4 8-9, hide_lines=2 7
+pre mark {
+  // If you want your highlights to take the full width
+  display: block;
+  color: currentcolor;
 }
-{% </content.code_block> %}
+pre table td:nth-of-type(1) {
+  // Select a colour matching your theme
+  color: #6b6b6b;
+  font-style: italic;
+}
+```
 
 {% <content.code_block language="shell"> %}
 zola build
@@ -104,10 +106,10 @@ zola check
 
 ## Tables
 
-| Element    | Purpose            | Native |
-| ---------- | ------------------ | ------ |
-| Markdown   | Structured writing | Yes    |
-| Component  | Reusable interface | Yes    |
+| Element    | Purpose            | Native         |
+| ---------- | ------------------ | -------------- |
+| Markdown   | Structured writing | Yes            |
+| Component  | Reusable interface | Yes            |
 | JavaScript | Optional code copy | Off by default |
 
 ## Disclosure

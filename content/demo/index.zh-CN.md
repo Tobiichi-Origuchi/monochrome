@@ -7,7 +7,7 @@ description = "主题常用内容元素的参考页面。"
 
 ## 文字排版
 
-普通正文可以包含**粗体**、*斜体*、~~删除线~~、***粗斜体***、**~~粗体删除线~~**、*~~斜体删除线~~*以及***~~全部样式的组合~~***。还可以包含`行内代码`、H<sub>2</sub>O、x<sup>2</sup>、<abbr title="超文本标记语言">HTML</abbr>、<del>已删除文字</del>、<ins>插入文字</ins>、<small>小号文字</small>、行内<q>引用</q>与 Emoji :sparkles:。
+普通正文可以包含**粗体**、_斜体_、~~删除线~~、_**粗斜体**_、**~~粗体删除线~~**、*~~斜体删除线~~*以及***~~全部样式的组合~~***。还可以包含`行内代码`、H<sub>2</sub>O、x<sup>2</sup>、<abbr title="超文本标记语言">HTML</abbr>、<del>已删除文字</del>、<ins>插入文字</ins>、<small>小号文字</small>、行内<q>引用</q>与 Emoji :sparkles:。
 
 这里还有{{<content.mark text="高亮文字" />}}、{{<content.badge label="徽章" />}}、行内标注{{<content.annotation label="补充说明" />}}与键盘输入{{<content.kbd keys="Ctrl + K" />}}。
 
@@ -18,9 +18,11 @@ description = "主题常用内容元素的参考页面。"
 {{<content.button label="主要操作" href="#表格" />}}
 {{<content.button label="次要操作" href="#媒体" variant="secondary" icon="simpleicons" />}}
 
-## Simple Icons
+## Icons
 
 这里有 Simple Icons {{<icon.simple slug="simpleicons" />}} 与 GitHub {{<icon.simple slug="github" />}}。在[这里](https://simpleicons.org/)搜索所有可用的图标。
+
+还有 Phosphor Icons {{<icon.phosphor name="phosphor-logo" />}} 和 Github {{<icon.phosphor name="github-logo" />}}。 在[这里](https://phosphoricons.com/)搜索所有可用的图标。
 
 ## 标题
 
@@ -84,18 +86,18 @@ description = "主题常用内容元素的参考页面。"
 
 ## 代码
 
-行内代码的显示效果类似 `cargo build`。
-
-```toml
-title = "Monochrome"
-compile_sass = true
-```
-
-{% <content.code_block language="rust"> %}
-fn main() {
-    println!("你好，Zola");
+```scss, linenos, linenostart=10, hl_lines=3-4 8-9, hide_lines=2 7
+pre mark {
+  // If you want your highlights to take the full width
+  display: block;
+  color: currentcolor;
 }
-{% </content.code_block> %}
+pre table td:nth-of-type(1) {
+  // Select a colour matching your theme
+  color: #6b6b6b;
+  font-style: italic;
+}
+```
 
 {% <content.code_block language="shell"> %}
 zola build
@@ -104,11 +106,11 @@ zola check
 
 ## 表格
 
-| 元素       | 用途           | 原生支持     |
-| ---------- | -------------- | ------------ |
-| Markdown   | 结构化写作     | 是           |
-| Component  | 可复用界面     | 是           |
-| JavaScript | 可选的代码复制 | 默认关闭     |
+| 元素       | 用途           | 原生支持 |
+| ---------- | -------------- | -------- |
+| Markdown   | 结构化写作     | 是       |
+| Component  | 可复用界面     | 是       |
+| JavaScript | 可选的代码复制 | 默认关闭 |
 
 ## 折叠区域
 

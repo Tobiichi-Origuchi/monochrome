@@ -1,4 +1,5 @@
-.simple-icon {
+.simple-icon,
+.phosphor-icon {
   align-items: center;
   color: inherit;
   display: inline-flex;
@@ -9,13 +10,15 @@
   width: 1em;
 }
 
-.simple-icon__image {
+.simple-icon__image,
+.phosphor-icon__image {
   display: block;
   fill: currentcolor;
   height: 100%;
   width: 100%;
 }
 
-.simple-icon--remote .simple-icon__image {
+.simple-icon--remote .simple-icon__image,
+.phosphor-icon--remote .phosphor-icon__image {
   filter: var(--remote-icon-filter);
 }

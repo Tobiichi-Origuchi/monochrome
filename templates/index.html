@@ -5,6 +5,6 @@
 {% block content %}
   {{<ui.page_header title={section.title or config.title} eyebrow={messages.zola_theme} description={section.description or config.description or ""} />}}
   <div class="prose">
-    {{ section.content | safe }}
+    {{<content.alert_icons html={section.content} />}}
   </div>
 {% endblock content %}

@@ -30,3 +30,45 @@
 <span class="{{ class_name }}"><img class="simple-icon__image" src="{{ icon_url }}" alt="{{ label }}" width="24" height="24"{% if not label %} aria-hidden="true"{% endif %}></span>
 {%- endif -%}
 {%- endcomponent icon.simple %}
+
+{% component icon.phosphor(name: string, label: string = "", weight: string = "", extra_class: string = "", mode: string = "", provider: string = "", version: string = "") -%}
+{%- set site_config = load_data(path="zola.toml", required=false) -%}
+{%- if not site_config -%}{%- set site_config = load_data(path="config.toml", required=false) -%}{%- endif -%}
+{%- set site_extra = site_config.extra or {} -%}
+{%- set options = site_extra.phosphor_icons or {} -%}
+{%- set mode = mode or options.mode or "inline" -%}
+{%- set provider = provider or options.provider or "jsdelivr" -%}
+{%- set version = version or options.version or "latest" -%}
+{%- set weight = weight or options.weight or "regular" -%}
+{%- if mode != "inline" and mode != "remote" -%}
+  {{- throw(message="Monochrome: extra.phosphor_icons.mode must be `inline` or `remote`.") -}}
+{%- endif -%}
+{%- if provider != "jsdelivr" and provider != "unpkg" -%}
+  {{- throw(message="Monochrome: extra.phosphor_icons.provider must be `jsdelivr` or `unpkg`.") -}}
+{%- endif -%}
+{%- if weight != "thin" and weight != "light" and weight != "regular" and weight != "bold" and weight != "fill" and weight != "duotone" -%}
+  {{- throw(message="Monochrome: Phosphor weight must be `thin`, `light`, `regular`, `bold`, `fill`, or `duotone`.") -}}
+{%- endif -%}
+{%- if not name is matching(pat="^[a-z0-9-]+$") -%}
+  {{- throw(message="Monochrome: `" ~ name ~ "` is not a valid Phosphor icon name.") -}}
+{%- endif -%}
+{%- if weight == "regular" -%}
+  {%- set filename = name ~ ".svg" -%}
+{%- else -%}
+  {%- set filename = name ~ "-" ~ weight ~ ".svg" -%}
+{%- endif -%}
+{%- set package_path = "@phosphor-icons/core@" ~ version ~ "/assets/" ~ weight ~ "/" ~ filename -%}
+{%- if provider == "unpkg" -%}
+  {%- set icon_url = "https://unpkg.com/" ~ package_path -%}
+{%- else -%}
+  {%- set icon_url = "https://cdn.jsdelivr.net/npm/" ~ package_path -%}
+{%- endif -%}
+{%- set class_name = "phosphor-icon phosphor-icon--" ~ mode -%}
+{%- if extra_class -%}{%- set class_name = class_name ~ " " ~ extra_class -%}{%- endif -%}
+{%- if mode == "inline" -%}
+  {%- set svg = load_data(url=icon_url, format="plain") -%}
+<span class="{{ class_name }}"{% if label %} role="img" aria-label="{{ label }}"{% else %} aria-hidden="true"{% endif %}>{{ svg | replace(from="<svg ", to='<svg class="phosphor-icon__image" aria-hidden="true" focusable="false" ') | safe }}</span>
+{%- else -%}
+<span class="{{ class_name }}"><img class="phosphor-icon__image" src="{{ icon_url }}" alt="{{ label }}" width="256" height="256"{% if not label %} aria-hidden="true"{% endif %}></span>
+{%- endif -%}
+{%- endcomponent icon.phosphor %}
