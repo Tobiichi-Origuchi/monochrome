@@ -79,6 +79,7 @@
 
 {% component site.utility_menu(messages: map, active_lang: string, default_language: string, languages: map, translations: array, home_url: string, i18n_path: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
 <nav class="utility-menu" aria-label="{{ messages.utility_navigation }}">
+  {%- if languages %}
   <button class="utility-trigger utility-trigger--language" id="language-trigger" type="button" popovertarget="language-options">{{ messages.language }}</button>
   <ul class="utility-popover utility-popover--language" id="language-options" popover="auto">
       {%- if translations %}
@@ -98,6 +99,7 @@
         {%- endfor %}
       {%- endif %}
   </ul>
+  {%- endif %}
 
   <button class="utility-trigger utility-trigger--feed" id="feed-trigger" type="button" popovertarget="feed-options">{{ messages.feed }}</button>
   <ul class="utility-popover utility-popover--feed" id="feed-options" popover="auto">
