@@ -3,8 +3,8 @@
 .prose {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
   font-size: 1.08rem;
-  max-width: 42rem;
   overflow-wrap: break-word;
+  width: 100%;
 
   > :first-child {
     margin-block-start: 0;
