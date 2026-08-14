@@ -60,8 +60,9 @@ feed_filenames = ["atom.xml", "rss.xml"]
 taxonomies = [{ name = "tags" }]
 
 [extra]
-# Directory containing one UI translation file per language code.
-# Each file name must exactly match its Zola language code.
+# Optional site-level overrides for the bundled UI translations. Each file
+# name must exactly match its Zola language code; missing files fall back to
+# the copies bundled with Monochrome.
 i18n_path = "i18n/"
 
 # Optional progressive enhancement for code blocks.

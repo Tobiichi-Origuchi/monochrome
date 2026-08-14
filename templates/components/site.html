@@ -30,15 +30,16 @@
 </li>
 {%- endcomponent site.navigation_group %}
 
-{% component site.sidebar(site_title: string, messages: map, navigation: map, active_lang: string, default_language: string, current_url: string = "") -%}
+{% component site.sidebar(site_title: string, home_url: string, messages: map, navigation: map, active_lang: string, default_language: string, current_url: string = "") -%}
 {%- if active_lang != default_language and navigation[active_lang] and navigation[active_lang].links -%}
   {%- set links = navigation[active_lang].links -%}
 {%- else -%}
   {%- set links = navigation.links or [] -%}
 {%- endif -%}
 <aside class="sidebar" id="site-sidebar" tabindex="0">
-  <a class="brand" href="{{ get_url(path=navigation.home_url, lang=active_lang) }}">{{ site_title }}</a>
+  {% if site_title %}<a class="brand" href="{{ get_url(path=home_url, lang=active_lang) }}">{{ site_title }}</a>{% endif %}
 
+  {% if links %}
   <nav class="site-nav" aria-label="{{ messages.primary_navigation }}">
     <ul class="vertical-tabs">
       {%- for item in links %}
@@ -50,6 +51,7 @@
       {%- endfor %}
     </ul>
   </nav>
+  {% endif %}
 </aside>
 {%- endcomponent site.sidebar %}
 
@@ -57,8 +59,11 @@
 <input class="sidebar-toggle" id="sidebar-toggle" type="checkbox" role="switch" aria-controls="site-sidebar" aria-label="{{ messages.toggle_sidebar }}">
 {%- endcomponent site.sidebar_toggle %}
 
-{% component site.language_fallback(code: string, active_lang: string, home_url: string, i18n_path: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
-{%- set language_messages = load_data(path=i18n_path ~ code ~ ".toml") -%}
+{% component site.language_fallback(code: string, active_lang: string, home_url: string, i18n_path: string, fallback_i18n_path: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
+{%- set language_messages = load_data(path=i18n_path ~ code ~ ".toml", required=false) -%}
+{%- if not language_messages %}{%- set language_messages = load_data(path=fallback_i18n_path ~ code ~ ".toml", required=false) -%}{%- endif -%}
+{%- set language_name = code -%}
+{%- if language_messages and language_messages.language_name %}{%- set language_name = language_messages.language_name -%}{%- endif -%}
 {%- if taxonomy_name -%}
   {%- set target_taxonomy = get_taxonomy(kind=taxonomy_name, lang=code, required=false) -%}
   {%- if taxonomy_term -%}
@@ -74,39 +79,54 @@
 {%- else -%}
   {%- set target_url = get_url(path=home_url, lang=code) -%}
 {%- endif -%}
-<li><a href="{{ target_url }}" lang="{{ code }}" hreflang="{{ code }}"{% if active_lang == code %} aria-current="page"{% endif %}>{{ language_messages.language_name or code }}</a></li>
+<li><a href="{{ target_url }}" lang="{{ code }}" hreflang="{{ code }}"{% if active_lang == code %} aria-current="page"{% endif %}>{{ language_name }}</a></li>
 {%- endcomponent site.language_fallback %}
 
-{% component site.utility_menu(messages: map, active_lang: string, default_language: string, languages: map, translations: array, home_url: string, i18n_path: string, taxonomy_name: string = "", taxonomy_term: string = "") -%}
-<nav class="utility-menu" aria-label="{{ messages.utility_navigation }}">
+{% component site.utility_menu(messages: map, active_lang: string, default_language: string, languages: map, translations: array, home_url: string, i18n_path: string, fallback_i18n_path: string, generate_feeds: bool, feed_filenames: array, taxonomy_name: string = "", taxonomy_term: string = "") -%}
+{%- set show_utilities = languages or (generate_feeds and feed_filenames) -%}
+{% if show_utilities %}<nav class="utility-menu" aria-label="{{ messages.utility_navigation }}">{% else %}<div class="utility-menu" aria-hidden="true">{% endif %}
   {%- if languages %}
   <button class="utility-trigger utility-trigger--language" id="language-trigger" type="button" popovertarget="language-options">{{ messages.language }}</button>
   <ul class="utility-popover utility-popover--language" id="language-options" popover="auto">
       {%- if translations %}
         {%- for translation in translations %}
           {%- set translation_lang = translation.lang or default_language %}
-          {%- set language_messages = load_data(path=i18n_path ~ translation_lang ~ ".toml") %}
+          {%- set language_messages = load_data(path=i18n_path ~ translation_lang ~ ".toml", required=false) -%}
+          {%- if not language_messages %}{%- set language_messages = load_data(path=fallback_i18n_path ~ translation_lang ~ ".toml", required=false) -%}{%- endif -%}
+          {%- set language_name = translation_lang -%}
+          {%- if language_messages and language_messages.language_name %}{%- set language_name = language_messages.language_name -%}{%- endif %}
           <li>
             <a href="{{ translation.permalink }}" lang="{{ translation_lang }}" hreflang="{{ translation_lang }}"{% if translation_lang == active_lang %} aria-current="page"{% endif %}>
-              {{ language_messages.language_name or translation_lang }}
+              {{ language_name }}
             </a>
           </li>
         {%- endfor %}
       {%- else %}
-        {{<site.language_fallback code={active_lang} active_lang={active_lang} home_url={home_url} i18n_path={i18n_path} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+        {{<site.language_fallback code={active_lang} active_lang={active_lang} home_url={home_url} i18n_path={i18n_path} fallback_i18n_path={fallback_i18n_path} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
         {%- for code, language_config in languages %}
-          {{<site.language_fallback code={code} active_lang={active_lang} home_url={home_url} i18n_path={i18n_path} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
+          {{<site.language_fallback code={code} active_lang={active_lang} home_url={home_url} i18n_path={i18n_path} fallback_i18n_path={fallback_i18n_path} taxonomy_name={taxonomy_name} taxonomy_term={taxonomy_term} />}}
         {%- endfor %}
       {%- endif %}
   </ul>
   {%- endif %}
 
-  <button class="utility-trigger utility-trigger--feed" id="feed-trigger" type="button" popovertarget="feed-options">{{ messages.feed }}</button>
+  {% if generate_feeds and feed_filenames %}<button class="utility-trigger utility-trigger--feed" id="feed-trigger" type="button" popovertarget="feed-options">{{ messages.feed }}</button>
   <ul class="utility-popover utility-popover--feed" id="feed-options" popover="auto">
-    <li><a href="{{ get_url(path="atom.xml", lang=active_lang) }}" type="application/atom+xml">{{ messages.atom_feed }}</a></li>
-    <li><a href="{{ get_url(path="rss.xml", lang=active_lang) }}" type="application/rss+xml">{{ messages.rss_feed }}</a></li>
+    {%- for feed_filename in feed_filenames %}
+      {%- set feed_label = feed_filename -%}
+      {%- set feed_type = "application/xml" -%}
+      {%- if feed_filename is containing(pat="atom") -%}
+        {%- set feed_label = messages.atom_feed -%}
+        {%- set feed_type = "application/atom+xml" -%}
+      {%- elif feed_filename is containing(pat="rss") -%}
+        {%- set feed_label = messages.rss_feed -%}
+        {%- set feed_type = "application/rss+xml" -%}
+      {%- endif %}
+      <li><a href="{{ get_url(path=feed_filename, lang=active_lang) }}" type="{{ feed_type }}">{{ feed_label }}</a></li>
+    {%- endfor %}
   </ul>
-</nav>
+  {% endif %}
+{% if show_utilities %}</nav>{% else %}</div>{% endif %}
 {%- endcomponent site.utility_menu %}
 
 {% component site.footer(messages: map, options: map) -%}

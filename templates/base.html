@@ -1,5 +1,13 @@
 {%- set active_lang = lang or config.default_language -%}
-{%- set messages = load_data(path=config.extra.i18n_path ~ active_lang ~ ".toml") -%}
+{%- set site_extra = config.extra or {} -%}
+{%- set i18n_path = site_extra.i18n_path or "i18n/" -%}
+{%- set theme_i18n_path = "themes/monochrome/i18n/" -%}
+{%- set messages = load_data(path=i18n_path ~ active_lang ~ ".toml", required=false) -%}
+{%- if not messages %}{%- set messages = load_data(path=theme_i18n_path ~ active_lang ~ ".toml", required=false) -%}{%- endif -%}
+{%- if not messages %}{%- set messages = load_data(path=i18n_path ~ "en.toml", required=false) -%}{%- endif -%}
+{%- if not messages %}{%- set messages = load_data(path=theme_i18n_path ~ "en.toml") -%}{%- endif -%}
+{%- set navigation = site_extra.nav or {} -%}
+{%- set home_url = navigation.home_url or "/" -%}
 <!doctype html>
 <html lang="{{ active_lang }}" dir="{{ messages.direction }}" data-copy-label="{{ messages.copy_code }}" data-copied-label="{{ messages.code_copied }}" data-copy-failed-label="{{ messages.copy_failed }}">
   <head>
@@ -9,24 +17,27 @@
     <meta name="color-scheme" content="light dark">
     <title>{% block title %}{{ config.title }}{% endblock title %}</title>
     {% if current_url %}<link rel="canonical" href="{{ current_url }}">{% endif %}
-    <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", lang=active_lang) }}">
-    <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path="rss.xml", lang=active_lang) }}">
+    {% if config.generate_feeds %}{% for feed_filename in config.feed_filenames %}
+      {% if feed_filename is containing(pat="atom") %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path=feed_filename, lang=active_lang) }}">{% elif feed_filename is containing(pat="rss") %}<link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path=feed_filename, lang=active_lang) }}">{% endif %}
+    {% endfor %}{% endif %}
     <link rel="stylesheet" href="{{ get_url(path="site.css", cachebust=true) }}">
+    {% if config.markdown.highlighting.style == "class" %}
     <link rel="stylesheet" href="{{ get_url(path="giallo-light.css", cachebust=true) }}" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="{{ get_url(path="giallo-dark.css", cachebust=true) }}" media="(prefers-color-scheme: dark)">
-    {% if config.extra.enable_code_copy %}<script src="{{ get_url(path="js/code-copy.js", cachebust=true) }}" defer></script>{% endif %}
+    {% endif %}
+    {% if site_extra.enable_code_copy %}<script src="{{ get_url(path="js/code-copy.js", cachebust=true) }}" defer></script>{% endif %}
   </head>
   <body>
     <a class="skip-link" href="#content">{{ messages.skip_to_content }}</a>
     <div class="site-frame">
       {{<site.sidebar_toggle messages={messages} />}}
-      {{<site.sidebar site_title={config.title} messages={messages} navigation={config.extra.nav} active_lang={active_lang} default_language={config.default_language} current_url={current_url or ""} />}}
+      {{<site.sidebar site_title={config.title} home_url={home_url} messages={messages} navigation={navigation} active_lang={active_lang} default_language={config.default_language} current_url={current_url or ""} />}}
       <div class="page-column">
-        {{<site.utility_menu messages={messages} active_lang={active_lang} default_language={config.default_language} languages={config.languages} translations={page?.translations or section?.translations or []} home_url={config.extra.nav.home_url} i18n_path={config.extra.i18n_path} taxonomy_name={taxonomy?.name or ""} taxonomy_term={term?.name or ""} />}}
+        {{<site.utility_menu messages={messages} active_lang={active_lang} default_language={config.default_language} languages={config.languages} translations={page?.translations or section?.translations or []} home_url={home_url} i18n_path={i18n_path} fallback_i18n_path={theme_i18n_path} generate_feeds={config.generate_feeds} feed_filenames={config.feed_filenames} taxonomy_name={taxonomy?.name or ""} taxonomy_term={term?.name or ""} />}}
         <main id="content" tabindex="-1">
           {% block content %}{% endblock content %}
         </main>
-        {{<site.footer messages={messages} options={config.extra} />}}
+        {{<site.footer messages={messages} options={site_extra} />}}
       </div>
       <label class="sidebar-dismiss" for="sidebar-toggle" aria-label="{{ messages.close_sidebar }}"></label>
     </div>

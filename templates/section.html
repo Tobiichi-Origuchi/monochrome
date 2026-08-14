@@ -4,6 +4,9 @@
 {% block description %}{{ section.description or config.description }}{% endblock description %}
 
 {% block content %}
-  {{<ui.page_header title={section.title or messages.untitled} eyebrow={messages.section} description={section.description or ""} />}}
+  {{<ui.page_header title={section.title or messages.untitled} eyebrow={section.extra.eyebrow or messages.section} description={section.description or ""} />}}
+  {% if section.content %}<div class="prose section-content">
+    {{<content.alert_icons html={section.content} messages={messages} />}}
+  </div>{% endif %}
   {{<content.post_list posts={section.pages} messages={messages} />}}
 {% endblock content %}

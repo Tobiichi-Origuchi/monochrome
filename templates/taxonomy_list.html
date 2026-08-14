@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{{ messages.all_tags }} · {{ config.title }}{% endblock title %}
+{% block title %}{{ messages["all_" ~ taxonomy.name] or messages[taxonomy.name] or taxonomy.name | capitalize }} · {{ config.title }}{% endblock title %}
 
 {% block content %}
-  {{<ui.page_header title={messages.all_tags} eyebrow={messages.tags} />}}
-  {{<content.term_list terms={terms} messages={messages} active_lang={active_lang} />}}
+  {%- set taxonomy_label = messages[taxonomy.name] or taxonomy.name | capitalize -%}
+  {%- set taxonomy_title = messages["all_" ~ taxonomy.name] or taxonomy_label -%}
+  {%- set empty_message = messages["no_" ~ taxonomy.name] or messages.no_terms -%}
+  {{<ui.page_header title={taxonomy_title} eyebrow={taxonomy_label} />}}
+  {{<content.term_list terms={terms} messages={messages} active_lang={active_lang} empty_message={empty_message} />}}
 {% endblock content %}

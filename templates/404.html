@@ -5,5 +5,5 @@
 
 {% block content %}
   {{<ui.page_header title={messages.not_found} eyebrow="404" description={messages.not_found_description} />}}
-  <p class="back-link"><a href="{{ get_url(path=config.extra.nav.home_url, lang=active_lang) }}">{{ messages.back_home }}</a></p>
+  <p class="back-link"><a href="{{ get_url(path=home_url, lang=active_lang) }}">{{ messages.back_home }}</a></p>
 {% endblock content %}

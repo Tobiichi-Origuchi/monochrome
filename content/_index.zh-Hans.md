@@ -1,6 +1,8 @@
 +++
 title = "Monochrome"
 description = "适用于个人网站和博客的极简、可配置 Zola 主题。"
+[extra]
+eyebrow = "Zola 主题"
 +++
 
 Monochrome 让博客的结构保持直观、可预测。主题使用黑、灰、白配色和直角边缘，配有固定的垂直侧栏与居中的阅读区域，在宽屏和窄屏上都能保持舒适的排版。

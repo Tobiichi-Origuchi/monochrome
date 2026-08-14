@@ -1,4 +1,4 @@
-{% component content.term_list(terms: array, messages: map, active_lang: string) -%}
+{% component content.term_list(terms: array, messages: map, active_lang: string, empty_message: string = "") -%}
 {%- if terms %}
   <ul class="term-list">
     {%- for term in terms %}
@@ -9,6 +9,6 @@
     {%- endfor %}
   </ul>
 {% else %}
-  {{<ui.empty_state message={messages.no_tags} />}}
+  {{<ui.empty_state message={empty_message or messages.no_terms} />}}
 {% endif -%}
 {%- endcomponent content.term_list %}

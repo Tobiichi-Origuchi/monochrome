@@ -6,13 +6,13 @@
 {% block content %}
   <article class="single">
     {% if page.date %}
-      {{<ui.page_header title={page.title or messages.untitled} eyebrow={messages.article} description={page.description or ""} />}}
+      {{<ui.page_header title={page.title or messages.untitled} eyebrow={page.extra.eyebrow or messages.article} description={page.description or ""} />}}
       <div class="post-byline">
         {{<content.post_meta post={page} messages={messages} />}}
         {{<content.post_tags post={page} messages={messages} />}}
       </div>
     {% else %}
-      {{<ui.page_header title={page.title or messages.untitled} eyebrow={messages.page} description={page.description or ""} />}}
+      {{<ui.page_header title={page.title or messages.untitled} eyebrow={page.extra.eyebrow or messages.page} description={page.description or ""} />}}
     {% endif %}
 
     <div class="prose">

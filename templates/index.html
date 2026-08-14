@@ -3,8 +3,8 @@
 {% block description %}{{ section.description or config.description }}{% endblock description %}
 
 {% block content %}
-  {{<ui.page_header title={section.title or config.title} eyebrow={messages.zola_theme} description={section.description or config.description or ""} />}}
-  <div class="prose">
+  {{<ui.page_header title={section.title or config.title} eyebrow={section.extra.eyebrow or ""} description={section.description or config.description or ""} />}}
+  {% if section.content %}<div class="prose">
     {{<content.alert_icons html={section.content} messages={messages} />}}
-  </div>
+  </div>{% endif %}
 {% endblock content %}

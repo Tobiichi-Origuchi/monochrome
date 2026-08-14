@@ -1,6 +1,8 @@
 +++
 title = "Monochrome"
 description = "A minimal, configurable Zola theme for personal sites and blogs."
+[extra]
+eyebrow = "Zola Theme"
 +++
 
 Monochrome keeps the structure of a blog visible and predictable. It uses a black, gray, and white palette, square edges, a fixed vertical sidebar, and a centered reading area that remains comfortable on wide and narrow screens.
